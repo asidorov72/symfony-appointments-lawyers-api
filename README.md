@@ -1,1 +1,0 @@
-# symfony-appointments-lawyers-api
