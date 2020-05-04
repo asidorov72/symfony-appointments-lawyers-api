@@ -13,20 +13,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AuthService;
 use Psr\Log\LoggerInterface;
+use App\Service\CitizenCreateService;
 
-class UserController
+class CitizenController
 {
     private $monologLogger;
 
     private $authService;
 
+    private $userCreateService;
+
     public function __construct(
         LoggerInterface $monologLogger,
-        AuthService $authService
+        AuthService $authService,
+        CitizenCreateService $createService
     )
     {
-        $this->monologLogger = $monologLogger;
-        $this->authService   = $authService;
+        $this->monologLogger        = $monologLogger;
+        $this->authService          = $authService;
+        $this->citizenCreateService = $createService;
     }
 
     public function store(Request $request): JsonResponse
@@ -39,12 +44,8 @@ class UserController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-
-
         $payload = json_decode($request->getContent(), true);
 
-        return new JsonResponse(['message' => 'Go ahead!!'], Response::HTTP_CREATED);
-
-        //return $this->feedbackCreateService->create($payload);
+        return $this->citizenCreateService->create($payload);
     }
 }

@@ -11,8 +11,8 @@ healthcheck:
     controller: App\Controller\SystemController::healthcheck
     methods: GET
 store_user:
-    path: /user
-    controller: App\Controller\UserController::store
+    path: /citizen
+    controller: App\Controller\CitizenController::store
     methods: POST
 #list_feedback:
 #    path: /feedback
