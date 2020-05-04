@@ -1,3 +1,21 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+    methods: GET
+healthcheck:
+    path: /healthcheck
+    controller: App\Controller\SystemController::healthcheck
+    methods: GET
+store_user:
+    path: /citizen
+    controller: App\Controller\CitizenController::store
+    methods: POST
+#list_feedback:
+#    path: /feedback
+#    controller: App\Controller\FeedbackController::list
+#    methods: GET
+
