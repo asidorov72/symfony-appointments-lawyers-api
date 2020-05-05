@@ -3,9 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitizenRepository")
+ * @ORM\Table(
+ *      name="Citizen",
+ *      uniqueConstraints={@ORM\UniqueConstraint(columns={"email"})}
+ * )
+ * @UniqueEntity(
+ *      fields={"email"},
+ *      message="Email already exists in database."
+ * )
  */
 class Citizen
 {
@@ -15,11 +27,6 @@ class Citizen
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $email;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -46,21 +53,15 @@ class Citizen
      */
     private $sex;
 
+    /**
+     * @Assert\Email()
+     * @ORM\Column(type="string", length=50)
+     */
+    public $email;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -119,6 +120,18 @@ class Citizen
     public function setSex(?string $sex): self
     {
         $this->sex = $sex;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

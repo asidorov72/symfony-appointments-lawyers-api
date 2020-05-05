@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 1.5.2020 г.
- * Time: 14:08
+ * Date: 5.5.2020 г.
+ * Time: 10:55
  */
 
 namespace App\Controller;
@@ -13,10 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AuthService;
 use Psr\Log\LoggerInterface;
-use App\Service\CitizenCreateService;
-use App\Service\CitizenShowService;
 
-class CitizenController
+
+class AuthController
 {
     private $monologLogger;
 
@@ -28,18 +27,14 @@ class CitizenController
 
     public function __construct(
         LoggerInterface $monologLogger,
-        AuthService $authService,
-        CitizenCreateService $citizenCreateService,
-        CitizenShowService $citizenShowService
+        AuthService $authService
     )
     {
-        $this->monologLogger        = $monologLogger;
-        $this->authService          = $authService;
-        $this->citizenCreateService = $citizenCreateService;
-        $this->citizenShowService   = $citizenShowService;
+        $this->monologLogger = $monologLogger;
+        $this->authService   = $authService;
     }
 
-    public function store(Request $request): JsonResponse
+    public function login(Request $request): JsonResponse
     {
         try {
             $this->authService->isAuthorized($request);
@@ -49,8 +44,10 @@ class CitizenController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->citizenCreateService->create($request);
+        return $this->authService->isLogged($request);
     }
+
+
 
     public function list(): JsonResponse
     {

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Citizen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * @method Citizen|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +16,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CitizenRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct
+    (
+        ManagerRegistry $registry,
+        EntityManagerInterface $manager
+    )
     {
         parent::__construct($registry, Citizen::class);
+
+        $this->manager = $manager;
     }
 
     public function saveCitizen(array $data) : bool
@@ -36,9 +46,43 @@ class CitizenRepository extends ServiceEntityRepository
         empty($data['sex']) ? true : $citizenEntity->setSex($data['sex']);
 
         try{
-            $this->_em->persist($citizenEntity);
-            $this->_em->flush();
+            $this->manager->persist($citizenEntity);
+            $this->manager->flush();
             return true;
+        } catch(\Exception $e) {
+            throw new \Exception('SQL query error. Probably email is duplicated.');
+        }
+    }
+
+    public function findCitizen(array $criteria)
+    {
+        return $this->findOneBy($criteria);
+    }
+
+
+
+
+
+
+
+    public function findAllCitizen(array $criteria) : array
+    {
+        return $this->findAll();
+
+        $gb = $this->createQueryBuilder('f');
+
+//        foreach($criteria['exclude'] as $index => $word) {
+//            $gb->andWhere("f.message NOT LIKE :msg$index")
+//                ->setParameter("msg$index", '%' . $word . '%');
+//        }
+
+        ($criteria['limit'] === 0) ? true : $gb->setMaxResults($criteria['limit']);
+
+        $gb->orderBy( 'f.' . $criteria['orderBy']['field'], $criteria['orderBy']['order']);
+
+        try {
+            return $gb->getQuery()
+                ->getResult();
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }

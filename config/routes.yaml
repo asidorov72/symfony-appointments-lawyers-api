@@ -14,8 +14,12 @@ store_user:
     path: /citizen
     controller: App\Controller\CitizenController::store
     methods: POST
-#list_feedback:
-#    path: /feedback
-#    controller: App\Controller\FeedbackController::list
-#    methods: GET
+login_auth:
+    path: /login
+    controller: App\Controller\AuthController::login
+    methods: POST
+list_citizen:
+    path: /citizen
+    controller: App\Controller\CitizenController::list
+    methods: GET
 

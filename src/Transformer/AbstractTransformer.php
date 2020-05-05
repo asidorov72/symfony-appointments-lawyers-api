@@ -10,7 +10,6 @@ namespace App\Transformer;
 
 use App\Transformer\ApiTransformerInterface;
 
-
 abstract class AbstractTransformer implements ApiTransformerInterface
 {
     abstract function transform(array $array) : array;
