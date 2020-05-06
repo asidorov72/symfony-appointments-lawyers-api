@@ -44,7 +44,7 @@ class AuthController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->authService->isLogged($request);
+        return $this->authService->signIn($request);
     }
 
 

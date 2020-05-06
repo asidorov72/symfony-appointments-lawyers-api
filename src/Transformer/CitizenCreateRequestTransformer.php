@@ -22,15 +22,24 @@ class CitizenCreateRequestTransformer extends AbstractTransformer
 
     public function transform(array $payload) : array
     {
-        $psw = $this->tokenService->genAuthToken($payload['email'], $payload['password']['value']);
+        $password = $this->tokenService->genBasicToken(
+            $payload['email'],
+            $payload['password']['value']
+        );
+
+        $dateOfBirth = \DateTime::createFromFormat('Y-m-d', $payload['dateOfBirth']);
 
         return [
+            'password' => $password,
             'email' => $payload['email'],
-            'name' => $payload['name'],
-            'password' => $psw,
-            'sex' => $payload['sex'],
-            'phone' => $payload['phone'],
-            'age' => $payload['age'],
+            'firstName' => $payload['firstName'],
+            'lastName' => $payload['lastName'],
+            'phoneNumber' => $payload['phoneNumber'],
+            'title' => $payload['title'],
+            'postalCode' => $payload['postalCode'],
+            'postalAddress' => $payload['postalAddress'],
+            'country' => $payload['country'],
+            'dateOfBirth' => $dateOfBirth,
         ];
     }
 }

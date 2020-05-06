@@ -6,9 +6,9 @@
  * Time: 14:37
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
-use App\Validator\AbstractValidator;
+use App\Validator\ConstraintValidator\AbstractValidator;
 
 class EmailValidator extends AbstractValidator
 {

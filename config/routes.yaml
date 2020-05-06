@@ -18,6 +18,11 @@ login_auth:
     path: /login
     controller: App\Controller\AuthController::login
     methods: POST
+store_appointment:
+    path: /appointment
+    controller: App\Controller\AppointmentController::store
+    methods: POST
+
 list_citizen:
     path: /citizen
     controller: App\Controller\CitizenController::list

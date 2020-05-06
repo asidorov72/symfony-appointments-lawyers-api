@@ -6,7 +6,7 @@ use App\Entity\Citizen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
+//use DateTimeInterface;
 
 /**
  * @method Citizen|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,17 +33,25 @@ class CitizenRepository extends ServiceEntityRepository
     {
         $citizenEntity = new Citizen();
 
-        $citizenEntity->setEmail($data['email']);
-
         $citizenEntity->setPassword($data['password']);
 
-        $citizenEntity->setName($data['name']);
+        $citizenEntity->setEmail($data['email']);
 
-        empty($data['age']) ? true : $citizenEntity->setAge($data['age']);
+        $citizenEntity->setFirstName($data['firstName']);
 
-        empty($data['phone']) ? true : $citizenEntity->setPhone($data['phone']);
+        $citizenEntity->setLastName($data['lastName']);
 
-        empty($data['sex']) ? true : $citizenEntity->setSex($data['sex']);
+        $citizenEntity->setPhoneNumber($data['phoneNumber']);
+
+        $citizenEntity->setTitle($data['title']);
+
+        $citizenEntity->setDateOfBirth($data['dateOfBirth']);
+
+        empty($data['postalCode']) ? true : $citizenEntity->setPostalCode($data['postalCode']);
+
+        empty($data['postalAddress']) ? true : $citizenEntity->setPostalAddress($data['postalAddress']);
+
+        empty($data['country']) ? true : $citizenEntity->setCountry($data['country']);
 
         try{
             $this->manager->persist($citizenEntity);
@@ -68,24 +76,6 @@ class CitizenRepository extends ServiceEntityRepository
     public function findAllCitizen(array $criteria) : array
     {
         return $this->findAll();
-
-        $gb = $this->createQueryBuilder('f');
-
-//        foreach($criteria['exclude'] as $index => $word) {
-//            $gb->andWhere("f.message NOT LIKE :msg$index")
-//                ->setParameter("msg$index", '%' . $word . '%');
-//        }
-
-        ($criteria['limit'] === 0) ? true : $gb->setMaxResults($criteria['limit']);
-
-        $gb->orderBy( 'f.' . $criteria['orderBy']['field'], $criteria['orderBy']['order']);
-
-        try {
-            return $gb->getQuery()
-                ->getResult();
-        } catch(\Exception $e) {
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
-        }
     }
 
     // /**

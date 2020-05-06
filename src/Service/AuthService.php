@@ -81,6 +81,33 @@ class AuthService
         }
     }
 
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function isLogged(Request $request)
+    {
+        $headersXAuthToken = $request->headers->get('X-Auth-Token');
+
+        $payload = json_decode($request->getContent(), true);
+
+        if (empty($headersXAuthToken) || empty($payload['email'])) {
+            throw new \Exception('Bad request.');
+        }
+
+        try {
+            $this->isXAuthTokenValid($payload['email'], $headersXAuthToken);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @param array $payload
+     * @return mixed
+     */
     private function getAuthType(array $payload)
     {
         $aTypeParam = self::AUTH_TYPE[$payload['authType']];
@@ -88,9 +115,14 @@ class AuthService
         return $this->params->get($aTypeParam);
     }
 
-    private function getCitizen(array $payload)
+    /**
+     * @param string $email
+     * @return \App\Entity\Citizen
+     * @throws \Exception
+     */
+    private function getCitizen(string $email)
     {
-        $res = $this->citizenRepozitory->findBy(['email' => $payload['email']], [], 1);
+        $res = $this->citizenRepozitory->findBy(['email' => $email], [], 1);
 
         if (empty($res)) {
             throw new \Exception('Citizen does not exist!');
@@ -108,22 +140,20 @@ class AuthService
     private function isTokenValid($userType, $payload)
     {
         $citizenPassword = '';
-        $xAuthToken      = '';
 
-        $xAuthToken = $this->authTokenService->genAuthToken($payload['email'], $payload['password']['value']);
+        $basicToken = $this->authTokenService->genBasicToken($payload['email'], $payload['password']['value']);
 
         switch($userType) {
             case 'citizen':
-                $citizenPassword = $this->getCitizen($payload)->getPassword();
+                $citizenPassword = $this->getCitizen($payload['email'])->getPassword();
                 break;
         }
 
-        // @TODO - GENERATE uuid OF $xAuthToken AND email
-        if ($citizenPassword !== $xAuthToken) {
+        if ($citizenPassword !== $basicToken) {
             throw new \Exception('Invalid credentials.');
         }
 
-        $xAuthToken = $citizenPassword;
+        $xAuthToken = $this->authTokenService->genXAuthToken($payload['email'], $basicToken);
 
         return $xAuthToken;
     }
@@ -132,7 +162,7 @@ class AuthService
      * @param Request $request
      * @return JsonResponse
      */
-    public function isLogged(Request $request): JsonResponse
+    public function signIn(Request $request): JsonResponse
     {
         $payload = json_decode($request->getContent(), true);
 
@@ -156,13 +186,29 @@ class AuthService
 
         // 3. Compare token from db with the one generated of the payload
         try{
-            $uuid = $this->isTokenValid($userType, $payload);
+            $authToken = $this->isTokenValid($userType, $payload);
         } catch(\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return new JsonResponse(['xAuthToken' => $uuid], Response::HTTP_OK);
+        return new JsonResponse(['X-Auth-Token' => $authToken], Response::HTTP_OK);
+    }
+
+    /**
+     * @param string $email
+     * @param string $headersXAuthToken
+     * @throws \Exception
+     */
+    private function isXAuthTokenValid(string $email, string $headersXAuthToken)
+    {
+        $basicToken = $this->getCitizen($email)->getPassword();
+
+        $xAuthToken = $this->authTokenService->genXAuthToken($email, $basicToken);
+
+        if ($headersXAuthToken !== $xAuthToken) {
+            throw new \Exception('Invalid X-Auth-Token.');
+        }
     }
 }

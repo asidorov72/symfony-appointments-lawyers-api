@@ -8,7 +8,7 @@
 
 namespace App\Validator;
 
-use App\Validator\{
+use App\Validator\ConstraintValidator\{
     StringConstraints,
     StringValidator,
     IntConstraints,
@@ -19,6 +19,7 @@ use App\Validator\{
     EnumValidator
 };
 use App\Service\AuthService;
+use App\Helper\ArrayHelper;
 
 /**
  * @Annotation
@@ -48,14 +49,16 @@ class AuthLoginRequestValidator
 
     public function validate(array $array)
     {
+        $errors = [];
+
         // "email" field validation
-        $emailErrors = $this->emailValidator->validate(
+        $errors[] = $this->emailValidator->validate(
             ['email' => $array['email']],
             new EmailConstraints
         );
 
         // "password" field validation
-        $passwordErrors = $this->stringValidator->validate(
+        $errors[] = $this->stringValidator->validate(
             ['password' => $array['password']['value']],
             new StringConstraints([
                 'min' => 5,
@@ -64,18 +67,17 @@ class AuthLoginRequestValidator
         );
 
         // "name" field validation
-        $authTypeErrors = $this->enumValidator->validate(
+        $errors[] = $this->enumValidator->validate(
             ['authType' => $array['authType']],
             new EnumConstraints([
-                'enum' => AuthService::getAuthTypes()
+                'enum' => AuthService::getAuthTypes(),
+                'showHints' => false
             ])
         );
 
-        $errorsStr = implode(" ", array_merge(
-            $emailErrors,
-            $passwordErrors,
-            $authTypeErrors
-        ));
+        $errors = ArrayHelper::flatArray($errors);
+
+        $errorsStr = implode(" ", $errors);
 
         if (!empty($errorsStr)) {
             throw new \Exception($errorsStr);

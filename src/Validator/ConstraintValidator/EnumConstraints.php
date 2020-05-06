@@ -2,15 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 4.5.2020 г.
- * Time: 14:35
+ * Date: 5.5.2020 г.
+ * Time: 13:29
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
-class EmailConstraints
+class EnumConstraints
 {
     public $constraints = [
+        'enum' => [],
+        'showHints' => true,
         'allowEmptyValue' => false,
     ];
 
