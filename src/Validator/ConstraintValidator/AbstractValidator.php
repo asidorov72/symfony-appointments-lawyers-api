@@ -6,9 +6,9 @@
  * Time: 15:49
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
-use App\Validator\ApiValidatorInterface;
+use App\Validator\ConstraintValidator\ApiValidatorInterface;
 
 abstract class AbstractValidator implements ApiValidatorInterface
 {

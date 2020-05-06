@@ -6,9 +6,9 @@
  * Time: 14:37
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
-use App\Validator\AbstractValidator;
+use App\Validator\ConstraintValidator\AbstractValidator;
 
 class EmailValidator extends AbstractValidator
 {
@@ -34,7 +34,7 @@ class EmailValidator extends AbstractValidator
         }
 
         if (!filter_var($fieldValue, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = sprintf(self::INVALID_EMAIL_MSG, $fieldName, $fieldValue);
+            $errors[] = sprintf(self::INVALID_EMAIL_MSG, $fieldValue);
         }
 
         return $errors;

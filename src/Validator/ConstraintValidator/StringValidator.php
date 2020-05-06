@@ -6,9 +6,9 @@
  * Time: 11:47
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
-use App\Validator\AbstractValidator;
+use App\Validator\ConstraintValidator\AbstractValidator;
 
 class StringValidator extends AbstractValidator
 {

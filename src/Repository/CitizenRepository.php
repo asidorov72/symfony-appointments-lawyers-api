@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Citizen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+//use DateTimeInterface;
 
 /**
  * @method Citizen|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,34 +16,66 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CitizenRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct
+    (
+        ManagerRegistry $registry,
+        EntityManagerInterface $manager
+    )
     {
         parent::__construct($registry, Citizen::class);
+
+        $this->manager = $manager;
     }
 
     public function saveCitizen(array $data) : bool
     {
         $citizenEntity = new Citizen();
 
-        $citizenEntity->setEmail($data['email']);
-
         $citizenEntity->setPassword($data['password']);
 
-        $citizenEntity->setName($data['name']);
+        $citizenEntity->setEmail($data['email']);
 
-        empty($data['age']) ? true : $citizenEntity->setAge($data['age']);
+        $citizenEntity->setFirstName($data['firstName']);
 
-        empty($data['phone']) ? true : $citizenEntity->setPhone($data['phone']);
+        $citizenEntity->setLastName($data['lastName']);
 
-        empty($data['sex']) ? true : $citizenEntity->setSex($data['sex']);
+        $citizenEntity->setPhoneNumber($data['phoneNumber']);
+
+        $citizenEntity->setTitle($data['title']);
+
+        $citizenEntity->setDateOfBirth($data['dateOfBirth']);
+
+        empty($data['postalCode']) ? true : $citizenEntity->setPostalCode($data['postalCode']);
+
+        empty($data['postalAddress']) ? true : $citizenEntity->setPostalAddress($data['postalAddress']);
+
+        empty($data['country']) ? true : $citizenEntity->setCountry($data['country']);
 
         try{
-            $this->_em->persist($citizenEntity);
-            $this->_em->flush();
+            $this->manager->persist($citizenEntity);
+            $this->manager->flush();
             return true;
         } catch(\Exception $e) {
-            throw new \Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
+            throw new \Exception('SQL query error. Probably email is duplicated.');
         }
+    }
+
+    public function findCitizen(array $criteria)
+    {
+        return $this->findOneBy($criteria);
+    }
+
+
+
+
+
+
+
+    public function findAllCitizen(array $criteria) : array
+    {
+        return $this->findAll();
     }
 
     // /**

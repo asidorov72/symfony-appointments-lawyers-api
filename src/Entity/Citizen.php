@@ -3,9 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitizenRepository")
+ * @ORM\Table(
+ *      name="Citizen",
+ *      uniqueConstraints={@ORM\UniqueConstraint(columns={"email"})}
+ * )
+ * @UniqueEntity(
+ *      fields={"email"},
+ *      message="Email already exists in database."
+ * )
  */
 class Citizen
 {
@@ -17,62 +29,59 @@ class Citizen
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Email()
+     * @ORM\Column(type="string", length=50)
      */
-    private $phone;
+    public $email;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
-    private $age;
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $sex;
+    private $postalCode;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $postalAddress;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateOfBirth;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getPassword(): ?string
@@ -87,38 +96,110 @@ class Citizen
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getEmail(): ?string
     {
-        return $this->phone;
+        return $this->email;
     }
 
-    public function setPhone(?string $phone): self
+    public function setEmail(string $email): self
     {
-        $this->phone = $phone;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getFirstName(): ?string
     {
-        return $this->age;
+        return $this->firstName;
     }
 
-    public function setAge(?int $age): self
+    public function setFirstName(string $firstName): self
     {
-        $this->age = $age;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getSex(): ?string
+    public function getLastName(): ?string
     {
-        return $this->sex;
+        return $this->lastName;
     }
 
-    public function setSex(?string $sex): self
+    public function setLastName(string $lastName): self
     {
-        $this->sex = $sex;
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getPostalAddress(): ?string
+    {
+        return $this->postalAddress;
+    }
+
+    public function setPostalAddress(?string $postalAddress): self
+    {
+        $this->postalAddress = $postalAddress;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
+    {
+        $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }

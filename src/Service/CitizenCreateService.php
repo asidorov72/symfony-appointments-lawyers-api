@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Repository\CitizenRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Transformer\CitizenCreateRequestTransformer;
@@ -28,6 +29,13 @@ class CitizenCreateService
 
     private $monologLogger;
 
+    /**
+     * CitizenCreateService constructor.
+     * @param CitizenRepository $citizenRepository
+     * @param CitizenCreateRequestValidator $citizenCreateRequestValidator
+     * @param LoggerInterface $monologLogger
+     * @param CitizenCreateRequestTransformer $citizenCreateRequestTransformer
+     */
     public function __construct(
         CitizenRepository $citizenRepository,
         CitizenCreateRequestValidator $citizenCreateRequestValidator,
@@ -37,12 +45,18 @@ class CitizenCreateService
     {
         $this->citizenRepository               = $citizenRepository;
         $this->citizenCreateRequestValidator   = $citizenCreateRequestValidator;
-        $this->monologLogger                = $monologLogger;
+        $this->monologLogger                   = $monologLogger;
         $this->citizenCreateRequestTransformer = $citizenCreateRequestTransformer;
     }
 
-    public function create(array $payload) : JsonResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request) : JsonResponse
     {
+        $payload = json_decode($request->getContent(), true);
+
         try {
             $this->citizenCreateRequestValidator->validate($payload);
         } catch (\Exception $e) {

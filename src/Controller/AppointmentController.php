@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 1.5.2020 г.
- * Time: 14:08
+ * Date: 5.5.2020 г.
+ * Time: 22:31
  */
 
 namespace App\Controller;
@@ -13,30 +13,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AuthService;
 use Psr\Log\LoggerInterface;
-use App\Service\CitizenCreateService;
+use App\Service\AppointmentCreateService;
 use App\Service\CitizenShowService;
 
-class CitizenController
+class AppointmentController
 {
     private $monologLogger;
 
     private $authService;
 
-    private $citizenCreateService;
-
-    private $citizenShowService;
+    private $appointmentCreateService;
 
     public function __construct(
         LoggerInterface $monologLogger,
         AuthService $authService,
-        CitizenCreateService $citizenCreateService,
-        CitizenShowService $citizenShowService
+        AppointmentCreateService $appointmentCreateService
     )
     {
-        $this->monologLogger        = $monologLogger;
-        $this->authService          = $authService;
-        $this->citizenCreateService = $citizenCreateService;
-        $this->citizenShowService   = $citizenShowService;
+        $this->monologLogger            = $monologLogger;
+        $this->authService              = $authService;
+        $this->appointmentCreateService = $appointmentCreateService;
     }
 
     public function store(Request $request): JsonResponse
@@ -49,11 +45,19 @@ class CitizenController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->citizenCreateService->create($request);
+        try {
+            $this->authService->isLogged($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return $this->appointmentCreateService->create($request);
     }
 
-    public function list(): JsonResponse
-    {
-        return  $this->citizenShowService->show();
-    }
+//    public function list(): JsonResponse
+//    {
+//        return  $this->citizenShowService->show();
+//    }
 }

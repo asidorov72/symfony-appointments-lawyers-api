@@ -6,7 +6,7 @@
  * Time: 15:43
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
 interface ApiValidatorInterface
 {

@@ -6,7 +6,7 @@
  * Time: 11:09
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
 class StringConstraints
 {

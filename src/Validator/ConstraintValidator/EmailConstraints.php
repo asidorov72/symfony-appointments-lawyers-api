@@ -6,7 +6,7 @@
  * Time: 14:35
  */
 
-namespace App\Validator;
+namespace App\Validator\ConstraintValidator;
 
 class EmailConstraints
 {
