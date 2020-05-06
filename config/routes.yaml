@@ -10,9 +10,13 @@ healthcheck:
     path: /healthcheck
     controller: App\Controller\SystemController::healthcheck
     methods: GET
-store_user:
+store_citizen:
     path: /citizen
     controller: App\Controller\CitizenController::store
+    methods: POST
+store_lawyer:
+    path: /lawyer
+    controller: App\Controller\LawyerController::store
     methods: POST
 login_auth:
     path: /login
@@ -26,5 +30,9 @@ store_appointment:
 list_citizen:
     path: /citizen
     controller: App\Controller\CitizenController::list
+    methods: GET
+list_lawyer:
+    path: /lawyer
+    controller: App\Controller\LawyerController::list
     methods: GET
 

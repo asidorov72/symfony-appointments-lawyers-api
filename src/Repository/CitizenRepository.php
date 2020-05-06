@@ -6,7 +6,6 @@ use App\Entity\Citizen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-//use DateTimeInterface;
 
 /**
  * @method Citizen|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,7 +28,7 @@ class CitizenRepository extends ServiceEntityRepository
         $this->manager = $manager;
     }
 
-    public function saveCitizen(array $data) : bool
+    public function save(array $data) : bool
     {
         $citizenEntity = new Citizen();
 

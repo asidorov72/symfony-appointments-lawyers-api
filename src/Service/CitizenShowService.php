@@ -60,11 +60,15 @@ class CitizenShowService
             $data[] = [
                 'id' => $citizen->getId(),
                 'email' => $citizen->getEmail(),
-                'name' => $citizen->getName(),
+                'firstName' => $citizen->getFirstName(),
+                'lastName' => $citizen->getLastName(),
                 'password' => $citizen->getPassword(),
-                'phone' => $citizen->getPhone(),
-                'sex' => $citizen->getSex(),
-                'age' => $citizen->getAge(),
+                'phoneNumber' => $citizen->getPhoneNumber(),
+                'title' => $citizen->getTitle(),
+                'dateOfBirth' => $citizen->getDateOfBirth(),
+                'country' => $citizen->getCountry(),
+                'postalCode' => $citizen->getPostalCode(),
+                'postalAddress' => $citizen->getPostalAddress()
             ];
         }
 
