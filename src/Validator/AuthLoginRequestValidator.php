@@ -34,6 +34,13 @@ class AuthLoginRequestValidator
 
     private $enumValidator;
 
+    /**
+     * AuthLoginRequestValidator constructor.
+     * @param IntValidator $intValidator
+     * @param StringValidator $stringValidator
+     * @param EmailValidator $emailValidator
+     * @param EnumValidator $enumValidator
+     */
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 2.5.2020 г.
- * Time: 13:41
+ * Date: 7.5.2020 г.
+ * Time: 21:16
  */
 
 namespace App\Validator;
@@ -21,13 +21,13 @@ use App\Validator\ConstraintValidator\{
     DatetimeValidator,
     DuplicatedRecordsValidator
 };
-use App\Repository\CitizenRepository;
+use App\Repository\AppointmentRepository;
 use App\Helper\ArrayHelper;
 
 /**
  * @Annotation
  */
-class CitizenCreateRequestValidator
+class AppointmentCreateRequestValidator
 {
     private $intValidator;
 
@@ -41,17 +41,17 @@ class CitizenCreateRequestValidator
 
     private $duplicatedValidator;
 
-    private $citizenRepository;
+    private $appointmentRepository;
 
     /**
-     * CitizenCreateRequestValidator constructor.
+     * LawyerCreateRequestValidator constructor.
      * @param IntValidator $intValidator
      * @param StringValidator $stringValidator
      * @param EmailValidator $emailValidator
      * @param EnumValidator $enumValidator
      * @param DatetimeValidator $datetimeValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
-     * @param CitizenRepository $citizenRepository
+     * @param AppointmentRepository $appointmentRepository
      */
     public function __construct(
         IntValidator $intValidator,
@@ -60,7 +60,7 @@ class CitizenCreateRequestValidator
         EnumValidator $enumValidator,
         DatetimeValidator $datetimeValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
-        CitizenRepository $citizenRepository
+        AppointmentRepository $appointmentRepository
     )
     {
         $this->intValidator        = $intValidator;
@@ -69,7 +69,7 @@ class CitizenCreateRequestValidator
         $this->enumValidator       = $enumValidator;
         $this->datetimeValidator   = $datetimeValidator;
         $this->duplicatedValidator = $duplicatedValidator;
-        $this->citizenRepository   = $citizenRepository;
+        $this->appointmentRepository    = $appointmentRepository;
     }
 
     /**
@@ -79,12 +79,6 @@ class CitizenCreateRequestValidator
     public function validate(array $array)
     {
         $errors = [];
-
-        // "Duplicated records" validation
-        $errors[] = $this->duplicatedValidator->validate(
-            ['email' => $array['email']],
-            $this->citizenRepository
-        );
 
         // "email" field validation
         $errors[] = $this->emailValidator->validate(
@@ -149,8 +143,7 @@ class CitizenCreateRequestValidator
             ['postalCode' => $array['postalCode']],
             new StringConstraints([
                 'min' => 4,
-                'max' => 10,
-                'allowEmptyValue' => true
+                'max' => 10
             ])
         );
 
@@ -159,8 +152,7 @@ class CitizenCreateRequestValidator
             ['postalAddress' => $array['postalAddress']],
             new StringConstraints([
                 'min' => 10,
-                'max' => 255,
-                'allowEmptyValue' => true
+                'max' => 255
             ])
         );
 
@@ -169,8 +161,71 @@ class CitizenCreateRequestValidator
             ['country' => $array['country']],
             new StringConstraints([
                 'min' => 2,
-                'max' => 255,
+                'max' => 100
+            ])
+        );
+
+        // "companyName" field validation
+        $errors[] = $this->stringValidator->validate(
+            ['companyName' => $array['companyName']],
+            new StringConstraints([
+                'min' => 2,
+                'max' => 100,
                 'allowEmptyValue' => true
+            ])
+        );
+
+        // "lawyerLicenseNumber" field validation
+        $errors[] = $this->stringValidator->validate(
+            ['lawyerLicenseNumber' => $array['lawyerLicenseNumber']],
+            new StringConstraints([
+                'min' => 3,
+                'max' => 50
+            ])
+        );
+
+        // "lawyerLicenseIssueDate" field validation
+        $errors[] = $this->datetimeValidator->validate(
+            ['lawyerLicenseIssueDate' => $array['lawyerLicenseIssueDate']],
+            new DatetimeConstraints([
+                'format' => 'Y-m-d',
+            ])
+        );
+
+        // "lawyerLicenseExpireDate" field validation
+        $errors[] = $this->datetimeValidator->validate(
+            ['lawyerLicenseExpireDate' => $array['lawyerLicenseExpireDate']],
+            new DatetimeConstraints([
+                'checkIfExpired' => true,
+                'format' => 'Y-m-d',
+            ])
+        );
+
+        // "lawyerLicenseName" field validation
+        $errors[] = $this->stringValidator->validate(
+            ['lawyerLicenseName' => $array['lawyerLicenseName']],
+            new StringConstraints([
+                'min' => 2,
+                'max' => 100,
+                'allowEmptyValue' => true
+            ])
+        );
+
+        // "lawyerDegree" field validation
+        $errors[] = $this->stringValidator->validate(
+            ['lawyerDegree' => $array['lawyerDegree']],
+            new StringConstraints([
+                'min' => 2,
+                'max' => 50
+            ])
+        );
+
+        // "typeOfLawyer" field validation
+        $errors[] = $this->stringValidator->validate(
+            ['typeOfLawyer' => $array['typeOfLawyer']],
+            new StringConstraints([
+                'min' => 2,
+                'max' => 50
             ])
         );
 

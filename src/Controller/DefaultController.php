@@ -13,11 +13,18 @@ use Psr\Log\LoggerInterface;
 
 class DefaultController
 {
+    /**
+     * DefaultController constructor.
+     * @param LoggerInterface $monologLogger
+     */
     public function __construct(LoggerInterface $monologLogger)
     {
         $this->monologLogger = $monologLogger;
     }
 
+    /**
+     * @return Response
+     */
     public function index(): Response
     {
         $this->monologLogger->error('Index page response: ' . Response::HTTP_NOT_FOUND);

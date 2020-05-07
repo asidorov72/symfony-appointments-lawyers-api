@@ -38,13 +38,16 @@ list_lawyer:
     requirements:
         page: '\d+'
     methods: GET
-
-
 store_appointment:
     path: /appointment
     controller: App\Controller\AppointmentController::store
     methods: POST
-
-
-
+list_appointment:
+    path: /appointment/{page}
+    controller: App\Controller\AppointmentController::list
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    methods: GET
 

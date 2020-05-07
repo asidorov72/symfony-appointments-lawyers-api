@@ -43,6 +43,16 @@ class LawyerCreateRequestValidator
 
     private $lawyerRepository;
 
+    /**
+     * LawyerCreateRequestValidator constructor.
+     * @param IntValidator $intValidator
+     * @param StringValidator $stringValidator
+     * @param EmailValidator $emailValidator
+     * @param EnumValidator $enumValidator
+     * @param DatetimeValidator $datetimeValidator
+     * @param DuplicatedRecordsValidator $duplicatedValidator
+     * @param LawyerRepository $lawyerRepository
+     */
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,
@@ -62,6 +72,10 @@ class LawyerCreateRequestValidator
         $this->lawyerRepository    = $lawyerRepository;
     }
 
+    /**
+     * @param array $array
+     * @throws \Exception
+     */
     public function validate(array $array)
     {
         $errors = [];

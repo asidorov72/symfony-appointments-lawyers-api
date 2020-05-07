@@ -2,13 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 4.5.2020 г.
- * Time: 19:23
+ * Date: 7.5.2020 г.
+ * Time: 18:51
  */
 
 namespace App\Service;
 
-use App\Repository\CitizenRepository;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,42 +18,32 @@ use Psr\Log\LoggerInterface;
 /**
  * @codeCoverageIgnore
  */
-class CitizenShowService
+class AppointmentShowService
 {
     private $params;
 
-    private $citizenRepository;
+    private $appointmentRepository;
 
     private $monologLogger;
 
-    /**
-     * CitizenShowService constructor.
-     * @param CitizenRepository $citizenRepository
-     * @param LoggerInterface $monologLogger
-     * @param ParameterBagInterface $params
-     */
     public function __construct(
-        CitizenRepository $citizenRepository,
+        AppointmentRepository $appointmentRepository,
         LoggerInterface $monologLogger,
         ParameterBagInterface $params
     )
     {
-        $this->citizenRepository = $citizenRepository;
-        $this->monologLogger     = $monologLogger;
-        $this->params            = $params;
+        $this->appointmentRepository = $appointmentRepository;
+        $this->monologLogger         = $monologLogger;
+        $this->params                = $params;
     }
 
-    /**
-     * @param int $page
-     * @return JsonResponse
-     */
     public function show(int $page = 1) : JsonResponse
     {
-        $itemsPerPage = $this->params->get('citizens_per_page');
+        $itemsPerPage = $this->params->get('appointments_per_page');
         $offset       = ($itemsPerPage * $page) - $itemsPerPage;
 
         try {
-            $citizenList = $this->citizenRepository->findAllByOffset(
+            $appointmentList = $this->appointmentRepository->findAllByOffset(
                 [
                     'orderBy' => ['field' => 'id', 'order' => 'asc'],
                     'offset' => $offset,
@@ -68,7 +58,7 @@ class CitizenShowService
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        if (empty($citizenList)) {
+        if (empty($appointmentList)) {
             $this->monologLogger->error('Nothing was found.');
 
             return new JsonResponse(['errorMessage' => 'Nothing was found.'], Response::HTTP_BAD_REQUEST);
@@ -76,19 +66,20 @@ class CitizenShowService
 
         $data = [];
 
-        foreach ($citizenList as $citizen) {
+        foreach ($appointmentList as $appointment) {
             $data[] = [
-                'id' => $citizen->getId(),
-                'email' => $citizen->getEmail(),
-                'firstName' => $citizen->getFirstName(),
-                'lastName' => $citizen->getLastName(),
-                'password' => $citizen->getPassword(),
-                'phoneNumber' => $citizen->getPhoneNumber(),
-                'title' => $citizen->getTitle(),
-                'dateOfBirth' => $citizen->getDateOfBirth(),
-                'country' => $citizen->getCountry(),
-                'postalCode' => $citizen->getPostalCode(),
-                'postalAddress' => $citizen->getPostalAddress()
+                'id' => $appointment->getId(),
+                'email' => $appointment->getEmail(),
+                'lawyerId' => $appointment->getLawyerId(),
+                'citizenId' => $appointment->getCitizenId(),
+                'status' => $appointment->getStatus(),
+                'meetingType' => $appointment->getMeetingType(),
+                'meetingTitle' => $appointment->getMeetingTitle(),
+                'meetingDescription' => $appointment->getMeetingDescription(),
+                'paymentStatus' => $appointment->getPaymentStatus(),
+                'duration' => $appointment->getDuration(),
+                'datetime' => $appointment->getDatetime(),
+                'date' => $appointment->getDate()
             ];
         }
 

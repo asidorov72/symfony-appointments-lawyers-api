@@ -26,6 +26,13 @@ class CitizenController
 
     private $citizenShowService;
 
+    /**
+     * CitizenController constructor.
+     * @param LoggerInterface $monologLogger
+     * @param AuthService $authService
+     * @param CitizenCreateService $citizenCreateService
+     * @param CitizenShowService $citizenShowService
+     */
     public function __construct(
         LoggerInterface $monologLogger,
         AuthService $authService,
@@ -39,6 +46,10 @@ class CitizenController
         $this->citizenShowService   = $citizenShowService;
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -52,6 +63,11 @@ class CitizenController
         return $this->citizenCreateService->create($request);
     }
 
+    /**
+     * @param Request $request
+     * @param $page
+     * @return JsonResponse
+     */
     public function list(Request $request, $page): JsonResponse
     {
         try {

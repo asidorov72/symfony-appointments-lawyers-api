@@ -10,12 +10,19 @@ namespace App\Validator\ConstraintValidator;
 
 class DatetimeConstraints
 {
+    /**
+     * @var array|null
+     */
     public $constraints = [
         'checkIfExpired' => false,
         'format' => 'Y-m-d H:i:s',
         'allowEmptyValue' => false,
     ];
 
+    /**
+     * DatetimeConstraints constructor.
+     * @param null $constraints
+     */
     public function __construct($constraints = null)
     {
         $this->constraints = $constraints

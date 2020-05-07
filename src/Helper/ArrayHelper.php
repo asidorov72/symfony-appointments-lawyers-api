@@ -10,6 +10,10 @@ namespace App\Helper;
 
 class ArrayHelper
 {
+    /**
+     * @param array $array
+     * @return mixed
+     */
     public static function flatArray(array $array) : array
     {
         $return = array();

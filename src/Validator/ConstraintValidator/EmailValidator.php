@@ -16,6 +16,11 @@ class EmailValidator extends AbstractValidator
 
     const INVALID_EMAIL_MSG = "Email address %s is not valid.";
 
+    /**
+     * @param array $field
+     * @param $validation
+     * @return mixed
+     */
     public function validate(array $field, $validation) : array
     {
         $errors = [];

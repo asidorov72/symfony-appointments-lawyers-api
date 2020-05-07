@@ -22,6 +22,11 @@ class EnumValidator extends AbstractValidator
 
     const INVALID_ENUM_TYPE_MSG = "Field %s type is invalid.";
 
+    /**
+     * @param array $field
+     * @param $validation
+     * @return mixed
+     */
     public function validate(array $field, $validation) : array
     {
         $errors = [];

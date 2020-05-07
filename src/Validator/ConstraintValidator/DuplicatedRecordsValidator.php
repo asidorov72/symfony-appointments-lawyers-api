@@ -14,6 +14,11 @@ class DuplicatedRecordsValidator extends AbstractValidator
 {
     const DUPLICATED_RECORDS_MSG = "%s already exists.";
 
+    /**
+     * @param array $field
+     * @param $repository
+     * @return mixed
+     */
     public function validate(array $field, $repository) : array
     {
         $errors = [];

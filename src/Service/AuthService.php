@@ -40,6 +40,15 @@ class AuthService
 
     private $authTokenService;
 
+    /**
+     * AuthService constructor.
+     * @param ParameterBagInterface $params
+     * @param LoggerInterface $monologLogger
+     * @param AuthLoginRequestValidator $authLoginRequestValidator
+     * @param CitizenRepository $citizenRepozitory
+     * @param LawyerRepository $lawyerRepozitory
+     * @param \App\Service\AuthTokenService $authTokenService
+     */
     public function __construct(
         ParameterBagInterface $params,
         LoggerInterface $monologLogger,
@@ -79,7 +88,7 @@ class AuthService
             $headersTokenStr = array_pop($headersTokenArr);
 
             if ($apiKey !== $headersTokenStr) {
-                throw new \Exception('Not authorized');
+                throw new \Exception('Not authorized!!!');
             }
         } else {
             throw new \Exception('Not authorized. Headers incorrect');
@@ -130,7 +139,8 @@ class AuthService
 
     /**
      * @param string $email
-     * @return \App\Entity\Citizen
+     * @param string $userType
+     * @return mixed
      * @throws \Exception
      */
     private function getLawyerCitizen(string $email, string $userType)

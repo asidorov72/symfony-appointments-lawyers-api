@@ -8,10 +8,12 @@
 
 namespace App\Service;
 
-use App\Repository\CitizenRepository;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Transformer\AppointmentCreateRequestTransformer;
+use App\Validator\AppointmentCreateRequestValidator;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -19,17 +21,25 @@ use Psr\Log\LoggerInterface;
  */
 class AppointmentCreateService
 {
-    private $citizenRepository;
+    private $appointmentRepository;
+
+    private $appointmentCreateRequestValidator;
+
+    private $appointmentCreateRequestTransformer;
 
     private $monologLogger;
 
     public function __construct(
-        CitizenRepository $citizenRepository,
-        LoggerInterface $monologLogger
+        AppointmentRepository $appointmentRepository,
+        LoggerInterface $monologLogger,
+        AppointmentCreateRequestValidator $appointmentCreateRequestValidator,
+        AppointmentCreateRequestTransformer $appointmentCreateRequestTransformer
     )
     {
-        $this->citizenRepository = $citizenRepository;
-        $this->monologLogger     = $monologLogger;
+        $this->appointmentRepository               = $appointmentRepository;
+        $this->monologLogger                       = $monologLogger;
+        $this->appointmentCreateRequestValidator   = $appointmentCreateRequestValidator;
+        $this->appointmentCreateRequestTransformer = $appointmentCreateRequestTransformer;
     }
 
     /**
@@ -40,32 +50,26 @@ class AppointmentCreateService
     {
         $payload = json_decode($request->getContent(), true);
 
-        var_dump($payload);
-        die();
-
-
-
-
 //        try {
-//            $this->citizenCreateRequestValidator->validate($payload);
+//            $this->appointmentCreateRequestValidator->validate($payload);
 //        } catch (\Exception $e) {
 //            $this->monologLogger->error($e->getMessage());
 //
 //            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
 //        }
-//
-//        $payload = $this->citizenCreateRequestTransformer->transform($payload);
-//
-//        try{
-//            $this->citizenRepository->saveCitizen($payload);
-//        } catch(\Exception $e) {
-//            $this->monologLogger->error($e->getMessage());
-//
-//            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-//        }
-//
-//        $this->monologLogger->info('Citizen was created!');
-//
-//        return new JsonResponse(['status' => 'Citizen was created!'], Response::HTTP_CREATED);
+
+        $payload = $this->appointmentCreateRequestTransformer->transform($payload);
+
+        try{
+            $this->appointmentRepository->save($payload);
+        } catch(\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->monologLogger->info('Appointment was requested!');
+
+        return new JsonResponse(['status' => 'Appointment was requested!'], Response::HTTP_CREATED);
     }
 }
