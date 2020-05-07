@@ -11,8 +11,8 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Service\AuthService;
 use Psr\Log\LoggerInterface;
+use App\Service\AuthService;
 
 
 class AuthController
@@ -20,10 +20,6 @@ class AuthController
     private $monologLogger;
 
     private $authService;
-
-    private $citizenCreateService;
-
-    private $citizenShowService;
 
     public function __construct(
         LoggerInterface $monologLogger,
@@ -45,12 +41,5 @@ class AuthController
         }
 
         return $this->authService->signIn($request);
-    }
-
-
-
-    public function list(): JsonResponse
-    {
-        return  $this->citizenShowService->show();
     }
 }

@@ -16,4 +16,24 @@ class DatetimeHelper
 
         return $d && $d->format($format) == $date;
     }
+
+    /**
+     * TRUE if expired
+     * @param $date
+     * @param string $format
+     */
+    public static function isDatetimeExpired($date, $format = 'Y-m-d H:i:s')
+    {
+        $now = new \DateTime();
+        $nowInSeconds = $now->getTimestamp();
+
+        $d = \DateTime::createFromFormat($format, $date);
+        $dTimestamp = $d->getTimestamp();
+
+        return $nowInSeconds > $dTimestamp;
+    }
+
+
+
+
 }

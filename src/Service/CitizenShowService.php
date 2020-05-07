@@ -9,8 +9,10 @@
 namespace App\Service;
 
 use App\Repository\CitizenRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -18,26 +20,34 @@ use Psr\Log\LoggerInterface;
  */
 class CitizenShowService
 {
+    private $params;
+
     private $citizenRepository;
 
     private $monologLogger;
 
     public function __construct(
         CitizenRepository $citizenRepository,
-        LoggerInterface $monologLogger
+        LoggerInterface $monologLogger,
+        ParameterBagInterface $params
     )
     {
         $this->citizenRepository = $citizenRepository;
-        $this->monologLogger      = $monologLogger;
+        $this->monologLogger     = $monologLogger;
+        $this->params            = $params;
     }
 
-    public function show() : JsonResponse
+    public function show(int $page = 1) : JsonResponse
     {
+        $itemsPerPage = $this->params->get('citizens_per_page');
+        $offset       = ($itemsPerPage * $page) - $itemsPerPage;
+
         try {
-            $citizenList = $this->citizenRepository->findAllCitizen(
+            $citizenList = $this->citizenRepository->findAllByOffset(
                 [
-                    'orderBy' => ['order' => 'desc'],
-                  //  'limit' => 10
+                    'orderBy' => ['field' => 'id', 'order' => 'asc'],
+                    'offset' => $offset,
+                    'limit' => $itemsPerPage
                 ]
             );
 
@@ -60,11 +70,15 @@ class CitizenShowService
             $data[] = [
                 'id' => $citizen->getId(),
                 'email' => $citizen->getEmail(),
-                'name' => $citizen->getName(),
+                'firstName' => $citizen->getFirstName(),
+                'lastName' => $citizen->getLastName(),
                 'password' => $citizen->getPassword(),
-                'phone' => $citizen->getPhone(),
-                'sex' => $citizen->getSex(),
-                'age' => $citizen->getAge(),
+                'phoneNumber' => $citizen->getPhoneNumber(),
+                'title' => $citizen->getTitle(),
+                'dateOfBirth' => $citizen->getDateOfBirth(),
+                'country' => $citizen->getCountry(),
+                'postalCode' => $citizen->getPostalCode(),
+                'postalAddress' => $citizen->getPostalAddress()
             ];
         }
 

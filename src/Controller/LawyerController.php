@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 1.5.2020 г.
- * Time: 14:08
+ * Date: 6.5.2020 г.
+ * Time: 16:45
  */
 
 namespace App\Controller;
@@ -13,30 +13,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Service\AuthService;
 use Psr\Log\LoggerInterface;
-use App\Service\CitizenCreateService;
-use App\Service\CitizenShowService;
+use App\Service\LawyerCreateService;
+use App\Service\LawyerShowService;
 
-class CitizenController
+class LawyerController
 {
     private $monologLogger;
 
     private $authService;
 
-    private $citizenCreateService;
+    private $lawyerCreateService;
 
-    private $citizenShowService;
+    private $lawyerShowService;
 
     public function __construct(
         LoggerInterface $monologLogger,
         AuthService $authService,
-        CitizenCreateService $citizenCreateService,
-        CitizenShowService $citizenShowService
+        LawyerCreateService $lawyerCreateService,
+        LawyerShowService $lawyerShowService
     )
     {
-        $this->monologLogger        = $monologLogger;
-        $this->authService          = $authService;
-        $this->citizenCreateService = $citizenCreateService;
-        $this->citizenShowService   = $citizenShowService;
+        $this->monologLogger       = $monologLogger;
+        $this->authService         = $authService;
+        $this->lawyerCreateService = $lawyerCreateService;
+        $this->lawyerShowService   = $lawyerShowService;
     }
 
     public function store(Request $request): JsonResponse
@@ -49,7 +49,7 @@ class CitizenController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->citizenCreateService->create($request);
+        return $this->lawyerCreateService->create($request);
     }
 
     public function list(Request $request, $page): JsonResponse
@@ -62,6 +62,6 @@ class CitizenController
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        return  $this->citizenShowService->show($page);
+        return  $this->lawyerShowService->show($page);
     }
 }

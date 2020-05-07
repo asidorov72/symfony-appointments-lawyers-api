@@ -2,33 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a99807a-cdf7-4f72-b54e-bf0b76243e3a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Controller/AppointmentController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Helper/ArrayHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Helper/DateTimeHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Service/AppointmentCreateService.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Migrations/Version20200505164035.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/AbstractValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/AbstractValidator.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/ApiValidatorInterface.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/ApiValidatorInterface.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/EmailConstraints.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailConstraints.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/EmailValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailValidator.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/EnumConstraints.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumConstraints.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/EnumValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumValidator.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/IntConstraints.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/IntConstraints.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/IntValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/IntValidator.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/StringConstraints.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/StringConstraints.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Validator/StringValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/StringValidator.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DuplicatedRecordsValidator.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.yaml" afterPath="$PROJECT_DIR$/config/routes.yaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/services.yaml" afterPath="$PROJECT_DIR$/config/services.yaml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/AuthController.php" afterPath="$PROJECT_DIR$/src/Controller/AuthController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Entity/Citizen.php" afterPath="$PROJECT_DIR$/src/Entity/Citizen.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/CitizenController.php" afterPath="$PROJECT_DIR$/src/Controller/CitizenController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/LawyerController.php" afterPath="$PROJECT_DIR$/src/Controller/LawyerController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Entity/Lawyer.php" afterPath="$PROJECT_DIR$/src/Entity/Lawyer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Helper/DateTimeHelper.php" afterPath="$PROJECT_DIR$/src/Helper/DateTimeHelper.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Repository/CitizenRepository.php" afterPath="$PROJECT_DIR$/src/Repository/CitizenRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Repository/LawyerRepository.php" afterPath="$PROJECT_DIR$/src/Repository/LawyerRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service/AuthService.php" afterPath="$PROJECT_DIR$/src/Service/AuthService.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service/AuthTokenService.php" afterPath="$PROJECT_DIR$/src/Service/AuthTokenService.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Transformer/CitizenCreateRequestTransformer.php" afterPath="$PROJECT_DIR$/src/Transformer/CitizenCreateRequestTransformer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validator/AuthLoginRequestValidator.php" afterPath="$PROJECT_DIR$/src/Validator/AuthLoginRequestValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service/CitizenShowService.php" afterPath="$PROJECT_DIR$/src/Service/CitizenShowService.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service/LawyerCreateService.php" afterPath="$PROJECT_DIR$/src/Service/LawyerCreateService.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service/LawyerShowService.php" afterPath="$PROJECT_DIR$/src/Service/LawyerShowService.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php" afterPath="$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php" afterPath="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validator/LawyerCreateRequestValidator.php" afterPath="$PROJECT_DIR$/src/Validator/LawyerCreateRequestValidator.php" />
     </list>
     <ignored path="symfony-appointments-lawyers-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,111 +42,109 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="CitizenController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CitizenController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.0">
+              <caret line="54" column="63" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
+              <folding>
+                <element signature="e#6#87#0#PHP" expanded="true" />
+                <element signature="e#116#162#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="CitizenCreateRequestValidator.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3076923">
-              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+            <state vertical-scroll-proportion="-5.4363637">
+              <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
+                <element signature="e#115#400#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmailConstraints.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailConstraints.php">
+      <file leaf-file-name="LawyerCreateRequestTransformer.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Transformer/LawyerCreateRequestTransformer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+            <state vertical-scroll-proportion="-7.730769">
+              <caret line="45" column="69" selection-start-line="45" selection-start-column="69" selection-end-line="45" selection-end-column="69" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmailValidator.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailValidator.php">
+      <file leaf-file-name="LawyerController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/LawyerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EnumConstraints.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumConstraints.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.923077">
-              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            <state vertical-scroll-proportion="-12.346154">
+              <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
               <folding>
-                <element signature="e#6#87#0#PHP" expanded="true" />
+                <element signature="e#116#162#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnumValidator.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumValidator.php">
+      <file leaf-file-name="LawyerShowService.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Service/LawyerShowService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.2692308">
-              <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
+            <state vertical-scroll-proportion="-1.8909091">
+              <caret line="41" column="64" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
+                <element signature="e#113#149#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StringValidator.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/StringValidator.php">
+      <file leaf-file-name="CitizenShowService.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Service/CitizenShowService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2692308">
-              <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthLoginRequestValidator.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Validator/AuthLoginRequestValidator.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5683297">
-              <caret line="72" column="54" selection-start-line="72" selection-start-column="54" selection-end-line="72" selection-end-column="54" />
+            <state vertical-scroll-proportion="0.23255815">
+              <caret line="42" column="64" selection-start-line="42" selection-start-column="64" selection-end-line="42" selection-end-column="64" />
               <folding>
-                <element signature="e#6#87#0#PHP" expanded="true" />
-                <element signature="e#115#320#0#PHP" expanded="true" />
+                <element signature="e#113#150#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntConstraints.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/IntConstraints.php">
+      <file leaf-file-name="services.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/services.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntValidator.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/IntValidator.php">
+      <file leaf-file-name="LawyerRepository.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Repository/LawyerRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2692308">
-              <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-              <folding />
+            <state vertical-scroll-proportion="-3.9636364">
+              <caret line="80" column="90" selection-start-line="80" selection-start-column="90" selection-end-line="80" selection-end-column="90" />
+              <folding>
+                <element signature="e#34#56#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StringConstraints.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/StringConstraints.php">
+      <file leaf-file-name="Lawyer.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/Lawyer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-              <folding />
+            <state vertical-scroll-proportion="-3.0363636">
+              <caret line="258" column="58" selection-start-line="258" selection-start-column="58" selection-end-line="258" selection-end-column="58" />
+              <folding>
+                <element signature="e#30#62#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -167,46 +157,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Validator/NumericValidator.php" />
-        <option value="$PROJECT_DIR$/src/Validator/IntConstraints.php" />
-        <option value="$PROJECT_DIR$/src/Validator/IntValidator.php" />
-        <option value="$PROJECT_DIR$/src/Validator/StringValidator.php" />
-        <option value="$PROJECT_DIR$/src/Transformer/UserCreateRequestTransformer.php" />
-        <option value="$PROJECT_DIR$/src/Validator/UserCreateRequestValidator.php" />
-        <option value="$PROJECT_DIR$/src/Service/UserCreateService.php" />
-        <option value="$PROJECT_DIR$/uml-diagram.txt" />
         <option value="$PROJECT_DIR$/.env.test" />
         <option value="$PROJECT_DIR$/.env.test.local" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/src/Controller/CitizenController.php" />
-        <option value="$PROJECT_DIR$/config/services.yaml" />
         <option value="$PROJECT_DIR$/src/Validator/LoginRequestValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/EnumConstraints.php" />
         <option value="$PROJECT_DIR$/src/Validator/EnumValidator.php" />
         <option value="$PROJECT_DIR$/src/Service/AuthInterface.php" />
         <option value="$PROJECT_DIR$/src/Transformer/AbstractTransformer.php" />
-        <option value="$PROJECT_DIR$/src/Service/CitizenShowService.php" />
         <option value="$PROJECT_DIR$/src/Validator/EmailValidator.php" />
         <option value="$PROJECT_DIR$/config/packages/validator.yaml" />
-        <option value="$PROJECT_DIR$/config/routes.yaml" />
-        <option value="$PROJECT_DIR$/src/Controller/AuthController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/AppointmentController.php" />
-        <option value="$PROJECT_DIR$/src/Service/AuthTokenService.php" />
-        <option value="$PROJECT_DIR$/src/Service/AuthService.php" />
         <option value="$PROJECT_DIR$/src/Service/AppointmentCreateService.php" />
         <option value="$PROJECT_DIR$/src/Entity/Citizen.php" />
-        <option value="$PROJECT_DIR$/src/Repository/CitizenRepository.php" />
         <option value="$PROJECT_DIR$/src/Transformer/CitizenCreateRequestTransformer.php" />
-        <option value="$PROJECT_DIR$/src/Service/CitizenCreateService.php" />
         <option value="$PROJECT_DIR$/src/Validator/DateTimeConstraints.php" />
         <option value="$PROJECT_DIR$/src/Helper/ArrayHelper.php" />
         <option value="$PROJECT_DIR$/src/Validator/DateTimeValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/DatetimeConstraints.php" />
         <option value="$PROJECT_DIR$/src/Validator/DatetimeValidator.php" />
-        <option value="$PROJECT_DIR$/src/Helper/DatetimeHelper.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/ApiValidatorInterface.php" />
-        <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php" />
-        <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailConstraints.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/AbstractValidator.php" />
@@ -214,10 +183,31 @@
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/IntValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/StringConstraints.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/StringValidator.php" />
-        <option value="$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumConstraints.php" />
         <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumValidator.php" />
         <option value="$PROJECT_DIR$/src/Validator/AuthLoginRequestValidator.php" />
+        <option value="$PROJECT_DIR$/src/Service/CitizenCreateService.php" />
+        <option value="$PROJECT_DIR$/src/Controller/AppointmentController.php" />
+        <option value="$PROJECT_DIR$/src/Service/AuthTokenService.php" />
+        <option value="$PROJECT_DIR$/src/Transformer/LawyerCreateRequestTransformer.php" />
+        <option value="$PROJECT_DIR$/src/Service/LawyerCreateService.php" />
+        <option value="$PROJECT_DIR$/src/Helper/DatetimeHelper.php" />
+        <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php" />
+        <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php" />
+        <option value="$PROJECT_DIR$/src/Validator/ConstraintValidator/DuplicatedRecordsValidator.php" />
+        <option value="$PROJECT_DIR$/src/Validator/LawyerCreateRequestValidator.php" />
+        <option value="$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php" />
+        <option value="$PROJECT_DIR$/src/Service/AuthService.php" />
+        <option value="$PROJECT_DIR$/src/Repository/CitizenRepository.php" />
+        <option value="$PROJECT_DIR$/src/Controller/CitizenController.php" />
+        <option value="$PROJECT_DIR$/config/routes.yaml" />
+        <option value="$PROJECT_DIR$/src/Controller/LawyerController.php" />
+        <option value="$PROJECT_DIR$/src/Entity/Lawyer.php" />
+        <option value="$PROJECT_DIR$/config/services.yaml" />
+        <option value="$PROJECT_DIR$/src/Controller/AuthController.php" />
+        <option value="$PROJECT_DIR$/src/Repository/LawyerRepository.php" />
+        <option value="$PROJECT_DIR$/src/Service/LawyerShowService.php" />
+        <option value="$PROJECT_DIR$/src/Service/CitizenShowService.php" />
       </list>
     </option>
   </component>
@@ -443,6 +433,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="symfony-appointments-lawyers-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="symfony-appointments-lawyers-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="symfony-appointments-lawyers-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="symfony-appointments-lawyers-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -508,14 +530,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2655068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15711948" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20785597" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -547,71 +569,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-core/User/UserInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0983146">
-          <caret line="30" column="10" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/maker-bundle/src/Resources/skeleton/doctrine/Repository.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.07865169">
-          <caret line="28" column="49" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-core/Authentication/Provider/DaoAuthenticationProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45786518">
-          <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-core/User/PasswordUpgraderInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6179775">
-          <caret line="25" column="91" selection-start-line="25" selection-start-column="91" selection-end-line="25" selection-end-column="91" />
-          <folding>
-            <element signature="e#7#236#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/doctrine-bridge/Security/User/EntityUserProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33146068">
-          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
-          <folding>
-            <element signature="e#288#329#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/validator/Validator/ValidatorInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.8846154">
-          <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.076923">
-          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-bundle/CHANGELOG.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35774648">
-          <caret line="179" column="54" selection-start-line="179" selection-start-column="54" selection-end-line="179" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/validator/Constraint.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-58.109093">
@@ -668,14 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/services.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="15" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Transformer/ApiTransformerInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.230769">
@@ -710,17 +659,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/CitizenShowService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.6923075">
-          <caret line="36" column="68" selection-start-line="36" selection-start-column="68" selection-end-line="36" selection-end-column="68" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#113#150#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/packages/validator.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -739,49 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
-          <folding>
-            <marker date="1588707060644" expanded="true" signature="490:610" placeholder="store_appointment:" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CitizenController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.461538">
-          <caret line="58" column="1" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#116#162#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.923077">
-          <caret line="43" column="103" selection-start-line="43" selection-start-column="103" selection-end-line="43" selection-end-column="103" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#116#162#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/AppointmentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.923077">
-          <caret line="55" column="51" selection-start-line="55" selection-start-column="51" selection-end-line="55" selection-end-column="51" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="false" />
-            <element signature="e#116#162#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Service/AppointmentCreateService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5">
@@ -789,57 +684,6 @@
           <folding>
             <element signature="e#6#87#0#PHP" expanded="false" />
             <element signature="e#113#150#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/AuthService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3454547">
-          <caret line="203" column="80" selection-start-line="203" selection-start-column="80" selection-end-line="203" selection-end-column="80" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#113#159#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/AuthTokenService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.038462">
-          <caret line="23" column="76" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Citizen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-87.88461">
-          <caret line="199" column="73" selection-start-line="199" selection-start-column="73" selection-end-line="199" selection-end-column="73" />
-          <folding>
-            <element signature="e#30#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repository/CitizenRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.8076925">
-          <caret line="41" column="55" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
-          <folding>
-            <element signature="e#34#57#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/CitizenCreateService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1153846">
-          <caret line="60" column="54" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
-          <folding>
-            <element signature="e#113#150#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -852,32 +696,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Transformer/CitizenCreateRequestTransformer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.576923">
-          <caret line="39" column="57" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
-          <folding>
-            <element signature="e#117#157#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Helper/ArrayHelper.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.576923">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Helper/DatetimeHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.807693">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#6#87#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -900,35 +724,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308">
-          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.576923">
-          <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailConstraints.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9615384">
-          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailValidator.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.9615384">
           <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
@@ -968,22 +764,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3076923">
-          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EnumConstraints.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.923077">
           <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
           <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#6#87#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -993,18 +779,264 @@
         <state vertical-scroll-proportion="3.2692308">
           <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
           <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#6#87#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Validator/AuthLoginRequestValidator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5683297">
-          <caret line="72" column="54" selection-start-line="72" selection-start-column="54" selection-end-line="72" selection-end-column="54" />
+        <state vertical-scroll-proportion="25.5">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Citizen.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.230769">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <folding>
+            <element signature="e#30#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Transformer/CitizenCreateRequestTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.769231">
+          <caret line="44" column="1" selection-start-line="44" selection-start-column="1" selection-end-line="44" selection-end-column="1" />
+          <folding>
+            <element signature="e#117#157#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AppointmentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.576923">
+          <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/AuthTokenService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.153846">
+          <caret line="28" column="102" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="102" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#115#320#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/LawyerCreateService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.076923">
+          <caret line="60" column="53" selection-start-line="60" selection-start-column="53" selection-end-line="60" selection-end-column="53" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+            <element signature="e#113#149#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Helper/DatetimeHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.576923">
+          <caret line="24" column="76" selection-start-line="24" selection-start-column="76" selection-end-line="24" selection-end-column="76" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeConstraints.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8461537">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/EmailValidator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.730769">
+          <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/DatetimeValidator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8461537">
+          <caret line="25" column="63" selection-start-line="25" selection-start-column="63" selection-end-line="25" selection-end-column="63" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+            <element signature="e#135#191#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/ConstraintValidator/DuplicatedRecordsValidator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8076925">
+          <caret line="16" column="63" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="63" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/LawyerCreateRequestValidator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7692308">
+          <caret line="207" column="55" selection-start-line="207" selection-start-column="55" selection-end-line="207" selection-end-column="55" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#115#400#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/CitizenCreateService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.115385">
+          <caret line="64" column="102" selection-start-line="64" selection-start-column="102" selection-end-line="64" selection-end-column="102" />
+          <folding>
+            <element signature="e#113#150#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/AuthService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.923077">
+          <caret line="14" column="77" selection-start-line="14" selection-start-column="77" selection-end-line="14" selection-end-column="77" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/CitizenRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.615385">
+          <caret line="72" column="5" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
+          <folding>
+            <element signature="e#34#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CitizenController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.0">
+          <caret line="54" column="63" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#116#162#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Lawyer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.0363636">
+          <caret line="258" column="58" selection-start-line="258" selection-start-column="58" selection-end-line="258" selection-end-column="58" />
+          <folding>
+            <element signature="e#30#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validator/CitizenCreateRequestValidator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.4363637">
+          <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#115#400#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Transformer/LawyerCreateRequestTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.730769">
+          <caret line="45" column="69" selection-start-line="45" selection-start-column="69" selection-end-line="45" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/LawyerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.346154">
+          <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
+          <folding>
+            <element signature="e#116#162#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/services.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/AuthController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33255813">
+          <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#116#162#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/LawyerRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9636364">
+          <caret line="80" column="90" selection-start-line="80" selection-start-column="90" selection-end-line="80" selection-end-column="90" />
+          <folding>
+            <element signature="e#34#56#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/LawyerShowService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8909091">
+          <caret line="41" column="64" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#113#149#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/CitizenShowService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23255815">
+          <caret line="42" column="64" selection-start-line="42" selection-start-column="64" selection-end-line="42" selection-end-column="64" />
+          <folding>
+            <element signature="e#113#150#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

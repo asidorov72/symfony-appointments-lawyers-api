@@ -6,7 +6,6 @@ use App\Entity\Citizen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-//use DateTimeInterface;
 
 /**
  * @method Citizen|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,7 +28,7 @@ class CitizenRepository extends ServiceEntityRepository
         $this->manager = $manager;
     }
 
-    public function saveCitizen(array $data) : bool
+    public function save(array $data) : bool
     {
         $citizenEntity = new Citizen();
 
@@ -58,24 +57,19 @@ class CitizenRepository extends ServiceEntityRepository
             $this->manager->flush();
             return true;
         } catch(\Exception $e) {
-            throw new \Exception('SQL query error. Probably email is duplicated.');
+            throw new \Exception($e->getMessage());
         }
     }
 
-    public function findCitizen(array $criteria)
+    public function findAllByOffset(array $criteria) : array
     {
-        return $this->findOneBy($criteria);
-    }
-
-
-
-
-
-
-
-    public function findAllCitizen(array $criteria) : array
-    {
-        return $this->findAll();
+        return $this->createQueryBuilder('c')
+            ->setMaxResults($criteria['limit'])
+            ->setFirstResult($criteria['offset'])
+            ->orderBy('c.' . $criteria['orderBy']['field'], $criteria['orderBy']['order'])
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**

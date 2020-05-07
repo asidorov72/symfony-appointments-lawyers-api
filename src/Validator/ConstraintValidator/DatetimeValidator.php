@@ -15,9 +15,13 @@ class DatetimeValidator extends AbstractValidator
 {
     const ALLOW_EMPTY_VALUE = false;
 
+    const CHECK_IF_DATETIME_EXPIRED = false;
+
     const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
-    const INVALID_DATETIME_VALUE_MSG = "Field %s value is invalid.";
+    const INVALID_DATETIME_VALUE_MSG = "Field %s value is invalid. Expected format is %s.";
+
+    const DATETIME_EXPIRED_MSG = "The field %s date %s is expired.";
 
     public function validate(array $field, $validation) : array
     {
@@ -28,6 +32,7 @@ class DatetimeValidator extends AbstractValidator
 
         $allowEmptyValue  = $validation->constraints['allowEmptyValue'] ?? self::ALLOW_EMPTY_VALUE;
         $format           = $validation->constraints['format'] ?? self::DATETIME_FORMAT;
+        $checkIfExpired   = $validation->constraints['checkIfExpired'] ?? self::CHECK_IF_DATETIME_EXPIRED;
 
         if (empty($fieldValue)) {
             if ($allowEmptyValue === true) {
@@ -38,7 +43,13 @@ class DatetimeValidator extends AbstractValidator
         }
 
         if (DatetimeHelper::validateDate($fieldValue, $format) === false) {
-            $errors[] = sprintf(self::INVALID_DATETIME_VALUE_MSG, $fieldName);
+            $errors[] = sprintf(self::INVALID_DATETIME_VALUE_MSG, $fieldName, $format);
+        } else {
+            if ($checkIfExpired === true) {
+                if (DatetimeHelper::isDatetimeExpired($fieldValue, $format) === true) {
+                    $errors[] = sprintf(self::DATETIME_EXPIRED_MSG, $fieldName, $fieldValue);
+                }
+            }
         }
 
         return $errors;

@@ -68,7 +68,7 @@ class CitizenCreateService
         $payload = $this->citizenCreateRequestTransformer->transform($payload);
 
         try{
-            $this->citizenRepository->saveCitizen($payload);
+            $this->citizenRepository->save($payload);
         } catch(\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 

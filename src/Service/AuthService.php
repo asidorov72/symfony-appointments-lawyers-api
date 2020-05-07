@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Validator\AuthLoginRequestValidator;
 use App\Repository\CitizenRepository;
+use App\Repository\LawyerRepository;
 use App\Service\AuthTokenService;
 
 /**
@@ -30,6 +31,8 @@ class AuthService
 
     private $citizenRepozitory;
 
+    private $lawyerRepozitory;
+
     private const AUTH_TYPE = [
         'AUTH1' => 'atype_auth1',
         'AUTH2' => 'atype_auth2'
@@ -42,6 +45,7 @@ class AuthService
         LoggerInterface $monologLogger,
         AuthLoginRequestValidator $authLoginRequestValidator,
         CitizenRepository $citizenRepozitory,
+        LawyerRepository $lawyerRepozitory,
         AuthTokenService $authTokenService
     )
     {
@@ -49,6 +53,7 @@ class AuthService
         $this->monologLogger             = $monologLogger;
         $this->authLoginRequestValidator = $authLoginRequestValidator;
         $this->citizenRepozitory         = $citizenRepozitory;
+        $this->lawyerRepozitory          = $lawyerRepozitory;
         $this->authTokenService          = $authTokenService;
     }
 
@@ -92,11 +97,19 @@ class AuthService
         $payload = json_decode($request->getContent(), true);
 
         if (empty($headersXAuthToken) || empty($payload['email'])) {
-            throw new \Exception('Bad request.');
+            throw new \Exception('Not authorized.');
+        }
+
+        $userType = explode('_', $headersXAuthToken);
+
+        if (empty($userType[0])) {
+            throw new \Exception('Not authorized.');
+        } else {
+            $userType = strtolower($userType[0]);
         }
 
         try {
-            $this->isXAuthTokenValid($payload['email'], $headersXAuthToken);
+            $this->isXAuthTokenValid($payload['email'], $headersXAuthToken, $userType);
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
@@ -120,9 +133,16 @@ class AuthService
      * @return \App\Entity\Citizen
      * @throws \Exception
      */
-    private function getCitizen(string $email)
+    private function getLawyerCitizen(string $email, string $userType)
     {
-        $res = $this->citizenRepozitory->findBy(['email' => $email], [], 1);
+        switch($userType) {
+            case 'citizen':
+                $res = $this->citizenRepozitory->findBy(['email' => $email], [], 1);
+                break;
+            case 'lawyer':
+                $res = $this->lawyerRepozitory->findBy(['email' => $email], [], 1);
+                break;
+        }
 
         if (empty($res)) {
             throw new \Exception('Citizen does not exist!');
@@ -139,23 +159,15 @@ class AuthService
      */
     private function isTokenValid($userType, $payload)
     {
-        $citizenPassword = '';
-
         $basicToken = $this->authTokenService->genBasicToken($payload['email'], $payload['password']['value']);
 
-        switch($userType) {
-            case 'citizen':
-                $citizenPassword = $this->getCitizen($payload['email'])->getPassword();
-                break;
-        }
+        $savedPassword = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
 
-        if ($citizenPassword !== $basicToken) {
+        if ($savedPassword !== $basicToken) {
             throw new \Exception('Invalid credentials.');
         }
 
-        $xAuthToken = $this->authTokenService->genXAuthToken($payload['email'], $basicToken);
-
-        return $xAuthToken;
+        return $this->authTokenService->genXAuthToken($payload['email'], $basicToken, $userType);
     }
 
     /**
@@ -199,13 +211,14 @@ class AuthService
     /**
      * @param string $email
      * @param string $headersXAuthToken
+     * @param string $userType
      * @throws \Exception
      */
-    private function isXAuthTokenValid(string $email, string $headersXAuthToken)
+    private function isXAuthTokenValid(string $email, string $headersXAuthToken, string $userType)
     {
-        $basicToken = $this->getCitizen($email)->getPassword();
+        $basicToken = $this->getLawyerCitizen($email, $userType)->getPassword();
 
-        $xAuthToken = $this->authTokenService->genXAuthToken($email, $basicToken);
+        $xAuthToken = $this->authTokenService->genXAuthToken($email, $basicToken, $userType);
 
         if ($headersXAuthToken !== $xAuthToken) {
             throw new \Exception('Invalid X-Auth-Token.');

@@ -21,8 +21,11 @@ class AuthTokenService
         return base64_encode($username . ':' . $password);
     }
 
-    public function genXAuthToken(string $email, string $basicToken): string
+    // X-Auth-Token
+    public function genXAuthToken(string $email, string $basicToken, string $userType): string
     {
-        return 'AUTH_' . substr(base64_encode($email . ':' . $basicToken), 0, self::X_AUTH_TOKEN_LEN);
+        $prefix = strtoupper($userType) . '_';
+
+        return $prefix . substr(base64_encode($email . ':' . $basicToken), 0, self::X_AUTH_TOKEN_LEN);
     }
 }

@@ -10,21 +10,41 @@ healthcheck:
     path: /healthcheck
     controller: App\Controller\SystemController::healthcheck
     methods: GET
-store_user:
-    path: /citizen
-    controller: App\Controller\CitizenController::store
-    methods: POST
 login_auth:
     path: /login
     controller: App\Controller\AuthController::login
     methods: POST
+store_citizen:
+    path: /citizen
+    controller: App\Controller\CitizenController::store
+    methods: POST
+list_citizen:
+    path: /citizen/{page}
+    controller: App\Controller\CitizenController::list
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    methods: GET
+store_lawyer:
+    path: /lawyer
+    controller: App\Controller\LawyerController::store
+    methods: POST
+list_lawyer:
+    path: /lawyer/{page}
+    controller: App\Controller\LawyerController::list
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    methods: GET
+
+
 store_appointment:
     path: /appointment
     controller: App\Controller\AppointmentController::store
     methods: POST
 
-list_citizen:
-    path: /citizen
-    controller: App\Controller\CitizenController::list
-    methods: GET
+
+
 
