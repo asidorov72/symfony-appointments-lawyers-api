@@ -57,13 +57,13 @@ class LawyerCreateService
     {
         $payload = json_decode($request->getContent(), true);
 
-//        try {
-//            $this->lawyerCreateRequestValidator->validate($payload);
-//        } catch (\Exception $e) {
-//            $this->monologLogger->error($e->getMessage());
-//
-//            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-//        }
+        try {
+            $this->lawyerCreateRequestValidator->validate($payload);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
 
         $payload = $this->lawyerCreateRequestTransformer->transform($payload);
 

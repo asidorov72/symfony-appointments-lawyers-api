@@ -52,8 +52,16 @@ class CitizenController
         return $this->citizenCreateService->create($request);
     }
 
-    public function list(): JsonResponse
+    public function list(Request $request, $page): JsonResponse
     {
-        return  $this->citizenShowService->show();
+        try {
+            $this->authService->isAuthorized($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return  $this->citizenShowService->show($page);
     }
 }

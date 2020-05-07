@@ -11,6 +11,7 @@ namespace App\Validator\ConstraintValidator;
 class DatetimeConstraints
 {
     public $constraints = [
+        'checkIfExpired' => false,
         'format' => 'Y-m-d H:i:s',
         'allowEmptyValue' => false,
     ];

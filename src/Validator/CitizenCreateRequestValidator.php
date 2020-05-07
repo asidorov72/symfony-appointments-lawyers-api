@@ -18,8 +18,10 @@ use App\Validator\ConstraintValidator\{
     EnumConstraints,
     EnumValidator,
     DatetimeConstraints,
-    DatetimeValidator
+    DatetimeValidator,
+    DuplicatedRecordsValidator
 };
+use App\Repository\CitizenRepository;
 use App\Helper\ArrayHelper;
 
 /**
@@ -37,24 +39,38 @@ class CitizenCreateRequestValidator
 
     private $datetimeValidator;
 
+    private $duplicatedValidator;
+
+    private $citizenRepository;
+
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,
         EmailValidator $emailValidator,
         EnumValidator $enumValidator,
-        DatetimeValidator $datetimeValidator
+        DatetimeValidator $datetimeValidator,
+        DuplicatedRecordsValidator $duplicatedValidator,
+        CitizenRepository $citizenRepository
     )
     {
-        $this->intValidator      = $intValidator;
-        $this->stringValidator   = $stringValidator;
-        $this->emailValidator    = $emailValidator;
-        $this->enumValidator     = $enumValidator;
-        $this->datetimeValidator = $datetimeValidator;
+        $this->intValidator        = $intValidator;
+        $this->stringValidator     = $stringValidator;
+        $this->emailValidator      = $emailValidator;
+        $this->enumValidator       = $enumValidator;
+        $this->datetimeValidator   = $datetimeValidator;
+        $this->duplicatedValidator = $duplicatedValidator;
+        $this->citizenRepository   = $citizenRepository;
     }
 
     public function validate(array $array)
     {
         $errors = [];
+
+        // "Duplicated records" validation
+        $errors[] = $this->duplicatedValidator->validate(
+            ['email' => $array['email']],
+            $this->citizenRepository
+        );
 
         // "email" field validation
         $errors[] = $this->emailValidator->validate(

@@ -11,6 +11,7 @@ namespace App\Service;
 use App\Repository\LawyerRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -22,22 +23,30 @@ class LawyerShowService
 
     private $monologLogger;
 
+    private $params;
+
     public function __construct(
         LawyerRepository $lawyerRepository,
-        LoggerInterface $monologLogger
+        LoggerInterface $monologLogger,
+        ParameterBagInterface $params
     )
     {
         $this->lawyerRepository = $lawyerRepository;
         $this->monologLogger    = $monologLogger;
+        $this->params           = $params;
     }
 
-    public function show() : JsonResponse
+    public function show(int $page = 1) : JsonResponse
     {
+        $itemsPerPage = $this->params->get('lawyers_per_page');
+        $offset       = ($itemsPerPage * $page) - $itemsPerPage;
+
         try {
-            $lawyerList = $this->lawyerRepository->findAllCitizen(
+            $lawyerList = $this->lawyerRepository->findAllByOffset(
                 [
-                    'orderBy' => ['order' => 'desc'],
-                    //  'limit' => 10
+                    'orderBy' => ['field' => 'id', 'order' => 'asc'],
+                    'offset' => $offset,
+                    'limit' => $itemsPerPage
                 ]
             );
 

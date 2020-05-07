@@ -85,7 +85,7 @@ class Lawyer
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $lawyerLicenceNumber;
+    private $lawyerLicenseNumber;
 
     /**
      * @ORM\Column(type="date")
@@ -249,14 +249,14 @@ class Lawyer
         return $this;
     }
 
-    public function getLawyerLicenceNumber(): ?string
+    public function getLawyerLicenseNumber(): ?string
     {
-        return $this->lawyerLicenceNumber;
+        return $this->lawyerLicenseNumber;
     }
 
-    public function setLawyerLicenceNumber(string $lawyerLicenceNumber): self
+    public function setLawyerLicenseNumber(string $lawyerLicenseNumber): self
     {
-        $this->lawyerLicenceNumber = $lawyerLicenceNumber;
+        $this->lawyerLicenseNumber = $lawyerLicenseNumber;
 
         return $this;
     }

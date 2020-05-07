@@ -28,10 +28,6 @@ class LawyerRepository extends ServiceEntityRepository
 
     public function save(array $data) : bool
     {
-//        var_dump($data['lawyerDegree']);
-//        die();
-
-
         $lawyerEntity = new Lawyer();
 
         $lawyerEntity->setPassword($data['password']);
@@ -48,7 +44,7 @@ class LawyerRepository extends ServiceEntityRepository
 
         $lawyerEntity->setDateOfBirth($data['dateOfBirth']);
 
-        $lawyerEntity->setLawyerLicenceNumber($data['lawyerLicenseNumber']);
+        $lawyerEntity->setLawyerLicenseNumber($data['lawyerLicenseNumber']);
 
         $lawyerEntity->setLawyerLicenseIssueDate($data['lawyerLicenseIssueDate']);
 
@@ -73,9 +69,19 @@ class LawyerRepository extends ServiceEntityRepository
             $this->manager->flush();
             return true;
         } catch(\Exception $e) {
-//            throw new \Exception('SQL query error. Probably email is duplicated.');
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function findAllByOffset(array $criteria) : array
+    {
+        return $this->createQueryBuilder('l')
+            ->setMaxResults($criteria['limit'])
+            ->setFirstResult($criteria['offset'])
+            ->orderBy('l.' . $criteria['orderBy']['field'], $criteria['orderBy']['order'])
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**

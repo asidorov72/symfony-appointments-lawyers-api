@@ -52,8 +52,16 @@ class LawyerController
         return $this->lawyerCreateService->create($request);
     }
 
-    public function list(): JsonResponse
+    public function list(Request $request, $page): JsonResponse
     {
-        return  $this->lowyerShowService->show();
+        try {
+            $this->authService->isAuthorized($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return  $this->lawyerShowService->show($page);
     }
 }

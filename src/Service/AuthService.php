@@ -97,13 +97,13 @@ class AuthService
         $payload = json_decode($request->getContent(), true);
 
         if (empty($headersXAuthToken) || empty($payload['email'])) {
-            throw new \Exception('Bad request.');
+            throw new \Exception('Not authorized.');
         }
 
         $userType = explode('_', $headersXAuthToken);
 
         if (empty($userType[0])) {
-            throw new \Exception('Bad request.');
+            throw new \Exception('Not authorized.');
         } else {
             $userType = strtolower($userType[0]);
         }

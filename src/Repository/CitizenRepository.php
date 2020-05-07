@@ -57,24 +57,19 @@ class CitizenRepository extends ServiceEntityRepository
             $this->manager->flush();
             return true;
         } catch(\Exception $e) {
-            throw new \Exception('SQL query error. Probably email is duplicated.');
+            throw new \Exception($e->getMessage());
         }
     }
 
-    public function findCitizen(array $criteria)
+    public function findAllByOffset(array $criteria) : array
     {
-        return $this->findOneBy($criteria);
-    }
-
-
-
-
-
-
-
-    public function findAllCitizen(array $criteria) : array
-    {
-        return $this->findAll();
+        return $this->createQueryBuilder('c')
+            ->setMaxResults($criteria['limit'])
+            ->setFirstResult($criteria['offset'])
+            ->orderBy('c.' . $criteria['orderBy']['field'], $criteria['orderBy']['order'])
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**
