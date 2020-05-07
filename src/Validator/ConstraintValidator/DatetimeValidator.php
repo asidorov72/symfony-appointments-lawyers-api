@@ -9,7 +9,7 @@
 namespace App\Validator\ConstraintValidator;
 
 use App\Validator\ConstraintValidator\AbstractValidator;
-use App\Helper\DatetimeHelper;
+use App\Helper\DateTimeHelper;
 
 class DatetimeValidator extends AbstractValidator
 {
@@ -42,11 +42,11 @@ class DatetimeValidator extends AbstractValidator
             }
         }
 
-        if (DatetimeHelper::validateDate($fieldValue, $format) === false) {
+        if (DateTimeHelper::validateDate($fieldValue, $format) === false) {
             $errors[] = sprintf(self::INVALID_DATETIME_VALUE_MSG, $fieldName, $format);
         } else {
             if ($checkIfExpired === true) {
-                if (DatetimeHelper::isDatetimeExpired($fieldValue, $format) === true) {
+                if (DateTimeHelper::isDatetimeExpired($fieldValue, $format) === true) {
                     $errors[] = sprintf(self::DATETIME_EXPIRED_MSG, $fieldName, $fieldValue);
                 }
             }

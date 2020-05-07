@@ -2,13 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 6.5.2020 г.
- * Time: 12:54
+ * Date: 7.5.2020 г.
+ * Time: 16:34
  */
 
 namespace App\Helper;
 
-class DatetimeHelper
+class DateTimeHelper
 {
     public static function validateDate($date, $format = 'Y-m-d H:i:s')
     {
@@ -18,22 +18,19 @@ class DatetimeHelper
     }
 
     /**
-     * TRUE if expired
      * @param $date
      * @param string $format
+     * @return bool
      */
     public static function isDatetimeExpired($date, $format = 'Y-m-d H:i:s')
     {
-        $now = new \DateTime();
+        $now = new \DateTime('TODAY');
         $nowInSeconds = $now->getTimestamp();
 
         $d = \DateTime::createFromFormat($format, $date);
         $dTimestamp = $d->getTimestamp();
 
-        return $nowInSeconds > $dTimestamp;
+        // Expiration date + 2 days
+        return $nowInSeconds > ($dTimestamp - 48 * 60 * 60);
     }
-
-
-
-
 }
