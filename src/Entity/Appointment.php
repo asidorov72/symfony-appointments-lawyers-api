@@ -32,34 +32,9 @@ class Appointment
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $meetingType;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $meetingTitle;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $meetingDescription;
-
-    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $paymentStatus;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $duration;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $datetime;
 
     /**
      * @ORM\Column(type="datetime")
@@ -70,6 +45,31 @@ class Appointment
      * @ORM\Column(type="string", length=50)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $appointmentDatetime;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $durationMins;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $appointmentTitle;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $appointmentDesc;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $appointmentType;
 
     public function getId(): ?int
     {
@@ -124,42 +124,6 @@ class Appointment
         return $this;
     }
 
-    public function getMeetingType(): ?string
-    {
-        return $this->meetingType;
-    }
-
-    public function setMeetingType(string $meetingType): self
-    {
-        $this->meetingType = $meetingType;
-
-        return $this;
-    }
-
-    public function getMeetingTitle(): ?string
-    {
-        return $this->meetingTitle;
-    }
-
-    public function setMeetingTitle(string $meetingTitle): self
-    {
-        $this->meetingTitle = $meetingTitle;
-
-        return $this;
-    }
-
-    public function getMeetingDescription(): ?string
-    {
-        return $this->meetingDescription;
-    }
-
-    public function setMeetingDescription(?string $meetingDescription): self
-    {
-        $this->meetingDescription = $meetingDescription;
-
-        return $this;
-    }
-
     public function getPaymentStatus(): ?string
     {
         return $this->paymentStatus;
@@ -168,30 +132,6 @@ class Appointment
     public function setPaymentStatus(?string $paymentStatus): self
     {
         $this->paymentStatus = $paymentStatus;
-
-        return $this;
-    }
-
-    public function getDuration(): ?string
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(string $duration): self
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    public function getDatetime(): ?\DateTimeInterface
-    {
-        return $this->datetime;
-    }
-
-    public function setDatetime(\DateTimeInterface $datetime): self
-    {
-        $this->datetime = $datetime;
 
         return $this;
     }
@@ -216,6 +156,66 @@ class Appointment
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getAppointmentDatetime(): ?\DateTimeInterface
+    {
+        return $this->appointmentDatetime;
+    }
+
+    public function setAppointmentDatetime(\DateTimeInterface $appointmentDatetime): self
+    {
+        $this->appointmentDatetime = $appointmentDatetime;
+
+        return $this;
+    }
+
+    public function getDurationMins(): ?int
+    {
+        return $this->durationMins;
+    }
+
+    public function setDurationMins(int $durationMins): self
+    {
+        $this->durationMins = $durationMins;
+
+        return $this;
+    }
+
+    public function getAppointmentTitle(): ?string
+    {
+        return $this->appointmentTitle;
+    }
+
+    public function setAppointmentTitle(?string $appointmentTitle): self
+    {
+        $this->appointmentTitle = $appointmentTitle;
+
+        return $this;
+    }
+
+    public function getAppointmentDesc(): ?string
+    {
+        return $this->appointmentDesc;
+    }
+
+    public function setAppointmentDesc(?string $appointmentDesc): self
+    {
+        $this->appointmentDesc = $appointmentDesc;
+
+        return $this;
+    }
+
+    public function getAppointmentType(): ?string
+    {
+        return $this->appointmentType;
+    }
+
+    public function setAppointmentType(?string $appointmentType): self
+    {
+        $this->appointmentType = $appointmentType;
 
         return $this;
     }

@@ -23,6 +23,7 @@ use App\Validator\ConstraintValidator\{
 };
 use App\Repository\AppointmentRepository;
 use App\Helper\ArrayHelper;
+use App\Helper\DateTimeHelper;
 
 /**
  * @Annotation
@@ -63,13 +64,13 @@ class AppointmentCreateRequestValidator
         AppointmentRepository $appointmentRepository
     )
     {
-        $this->intValidator        = $intValidator;
-        $this->stringValidator     = $stringValidator;
-        $this->emailValidator      = $emailValidator;
-        $this->enumValidator       = $enumValidator;
-        $this->datetimeValidator   = $datetimeValidator;
-        $this->duplicatedValidator = $duplicatedValidator;
-        $this->appointmentRepository    = $appointmentRepository;
+        $this->intValidator          = $intValidator;
+        $this->stringValidator       = $stringValidator;
+        $this->emailValidator        = $emailValidator;
+        $this->enumValidator         = $enumValidator;
+        $this->datetimeValidator     = $datetimeValidator;
+        $this->duplicatedValidator   = $duplicatedValidator;
+        $this->appointmentRepository = $appointmentRepository;
     }
 
     /**
@@ -80,152 +81,109 @@ class AppointmentCreateRequestValidator
     {
         $errors = [];
 
+        // "Duplicated records" validation
+        $errors[] = $this->duplicatedValidator->validate(
+            [
+                'appointmentDatetime' => DateTimeHelper::createFromFormatValidation(
+                    $array['appointmentDatetime'],
+                    'Y-m-d H:i:s'
+                ),
+                'citizenId' => (int) $array['citizenId'],
+                'lawyerId' => (int) $array['lawyerId']
+            ],
+            $this->appointmentRepository,
+            'AppointmentDatetime'
+        );
+
+        // "citizenId" field validation
+        $errors[] = $this->intValidator->validate(
+            ['citizenId' => $array['citizenId']],
+            new IntConstraints([
+                'min' => 1,
+                'max' => 99999999999
+            ])
+        );
+
+        // "lawyerId" field validation
+        $errors[] = $this->intValidator->validate(
+            ['lawyerId' => $array['lawyerId']],
+            new IntConstraints([
+                'min' => 1,
+                'max' => 99999999999
+            ])
+        );
+
+        // "status" field validation
+        $errors[] = $this->enumValidator->validate(
+            ['status' => $array['status']],
+            new EnumConstraints([
+                'enum' => ['pending', 'approved', 'rejected', 'closed'],
+            ])
+        );
+
+        // "paymentStatus" field validation
+        $errors[] = $this->enumValidator->validate(
+            ['paymentStatus' => $array['paymentStatus']],
+            new EnumConstraints([
+                'enum' => ['free', 'paid', 'pending'],
+                'allowEmptyValue' => true
+            ])
+        );
+
         // "email" field validation
         $errors[] = $this->emailValidator->validate(
             ['email' => $array['email']],
             new EmailConstraints
         );
 
-        // "password" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['password' => $array['password']['value']],
-            new StringConstraints([
-                'min' => 5,
-                'max' => 50,
-            ])
-        );
-
-        // "firstName" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['firstName' => $array['firstName']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 50,
-            ])
-        );
-
-        // "lastName" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['lastName' => $array['lastName']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 50,
-            ])
-        );
-
-        // "phoneNumber" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['phoneNumber' => $array['phoneNumber']],
-            new StringConstraints([
-                'min' => 4,
-                'max' => 50
-            ])
-        );
-
-        // "title" field validation
-        $errors[] = $this->enumValidator->validate(
-            ['title' => $array['title']],
-            new EnumConstraints([
-                'enum' => ['Mr.', 'Mrs.', 'Ms.'],
-            ])
-        );
-
-        // "dateOfBirth" field validation
+        // "appointmentDatetime" field validation
+        // 'expTime' => '18:00',
         $errors[] = $this->datetimeValidator->validate(
-            ['dateOfBirth' => $array['dateOfBirth']],
+            ['appointmentDatetime' => $array['appointmentDatetime']],
             new DatetimeConstraints([
-                'format' => 'Y-m-d',
+                'format' => 'Y-m-d H:i:s',
+                'checkIfAvailable' => true,
+                'intervalMins' => $array['durationMins'],
+                'expTime' => '18:00'
             ])
         );
 
-        // "postalCode" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['postalCode' => $array['postalCode']],
-            new StringConstraints([
-                'min' => 4,
-                'max' => 10
+        // "durationMins" field validation
+        $errors[] = $this->intValidator->validate(
+            ['durationMins' => $array['durationMins']],
+            new IntConstraints([
+                'min' => 30,
+                'max' => 300
             ])
         );
 
-        // "postalAddress" field validation
+        // "appointmentTitle" field validation
         $errors[] = $this->stringValidator->validate(
-            ['postalAddress' => $array['postalAddress']],
+            ['appointmentTitle' => $array['appointmentTitle']],
             new StringConstraints([
                 'min' => 10,
-                'max' => 255
-            ])
-        );
-
-        // "country" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['country' => $array['country']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 100
-            ])
-        );
-
-        // "companyName" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['companyName' => $array['companyName']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 100,
+                'max' => 255,
                 'allowEmptyValue' => true
             ])
         );
 
-        // "lawyerLicenseNumber" field validation
+        // "appointmentDesc" field validation
         $errors[] = $this->stringValidator->validate(
-            ['lawyerLicenseNumber' => $array['lawyerLicenseNumber']],
+            ['appointmentDesc' => $array['appointmentDesc']],
             new StringConstraints([
-                'min' => 3,
-                'max' => 50
-            ])
-        );
-
-        // "lawyerLicenseIssueDate" field validation
-        $errors[] = $this->datetimeValidator->validate(
-            ['lawyerLicenseIssueDate' => $array['lawyerLicenseIssueDate']],
-            new DatetimeConstraints([
-                'format' => 'Y-m-d',
-            ])
-        );
-
-        // "lawyerLicenseExpireDate" field validation
-        $errors[] = $this->datetimeValidator->validate(
-            ['lawyerLicenseExpireDate' => $array['lawyerLicenseExpireDate']],
-            new DatetimeConstraints([
-                'checkIfExpired' => true,
-                'format' => 'Y-m-d',
-            ])
-        );
-
-        // "lawyerLicenseName" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['lawyerLicenseName' => $array['lawyerLicenseName']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 100,
+                'min' => 10,
+                'max' => 255,
                 'allowEmptyValue' => true
             ])
         );
 
-        // "lawyerDegree" field validation
+        // "appointmentType" field validation
         $errors[] = $this->stringValidator->validate(
-            ['lawyerDegree' => $array['lawyerDegree']],
+            ['appointmentType' => $array['appointmentType']],
             new StringConstraints([
-                'min' => 2,
-                'max' => 50
-            ])
-        );
-
-        // "typeOfLawyer" field validation
-        $errors[] = $this->stringValidator->validate(
-            ['typeOfLawyer' => $array['typeOfLawyer']],
-            new StringConstraints([
-                'min' => 2,
-                'max' => 50
+                'min' => 5,
+                'max' => 100,
+                'allowEmptyValue' => true
             ])
         );
 

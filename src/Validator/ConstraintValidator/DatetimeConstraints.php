@@ -15,7 +15,12 @@ class DatetimeConstraints
      */
     public $constraints = [
         'checkIfExpired' => false,
+        'checkIfAvailable' => false,
+        'intervalMins' => 0,
         'format' => 'Y-m-d H:i:s',
+        'TZ' => 'UTC',
+        'expTime' => false,
+        'setCutoffTime' => false,
         'allowEmptyValue' => false,
     ];
 

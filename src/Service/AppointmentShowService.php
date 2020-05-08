@@ -73,12 +73,12 @@ class AppointmentShowService
                 'lawyerId' => $appointment->getLawyerId(),
                 'citizenId' => $appointment->getCitizenId(),
                 'status' => $appointment->getStatus(),
-                'meetingType' => $appointment->getMeetingType(),
-                'meetingTitle' => $appointment->getMeetingTitle(),
-                'meetingDescription' => $appointment->getMeetingDescription(),
+                'appointmentType' => $appointment->getAppointmentType(),
+                'appointmentTitle' => $appointment->getAppointmentTitle(),
+                'appointmentDesc' => $appointment->getAppointmentDesc(),
                 'paymentStatus' => $appointment->getPaymentStatus(),
-                'duration' => $appointment->getDuration(),
-                'datetime' => $appointment->getDatetime(),
+                'durationMins' => $appointment->getDurationMins(),
+                'appointmentDatetime' => $appointment->getAppointmentDatetime(),
                 'date' => $appointment->getDate()
             ];
         }

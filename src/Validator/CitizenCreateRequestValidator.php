@@ -83,7 +83,8 @@ class CitizenCreateRequestValidator
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
             ['email' => $array['email']],
-            $this->citizenRepository
+            $this->citizenRepository,
+            'Email'
         );
 
         // "email" field validation

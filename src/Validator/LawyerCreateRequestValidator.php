@@ -83,7 +83,8 @@ class LawyerCreateRequestValidator
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
             ['email' => $array['email']],
-            $this->lawyerRepository
+            $this->lawyerRepository,
+            'Email'
         );
 
         // "email" field validation
@@ -204,6 +205,7 @@ class LawyerCreateRequestValidator
             new DatetimeConstraints([
                 'checkIfExpired' => true,
                 'format' => 'Y-m-d',
+                'setCuttoffTime' => true
             ])
         );
 

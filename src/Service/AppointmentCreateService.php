@@ -50,13 +50,13 @@ class AppointmentCreateService
     {
         $payload = json_decode($request->getContent(), true);
 
-//        try {
-//            $this->appointmentCreateRequestValidator->validate($payload);
-//        } catch (\Exception $e) {
-//            $this->monologLogger->error($e->getMessage());
-//
-//            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-//        }
+        try {
+            $this->appointmentCreateRequestValidator->validate($payload);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
 
         $payload = $this->appointmentCreateRequestTransformer->transform($payload);
 

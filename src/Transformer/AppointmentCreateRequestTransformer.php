@@ -33,19 +33,19 @@ class AppointmentCreateRequestTransformer extends AbstractTransformer
     {
         $datetimeStr         = DateTimeHelper::getCurrentDatetime();
         $date                = \DateTime::createFromFormat('Y-m-d H:i:s', $datetimeStr);
-        $appointmentDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $payload['datetime']);
+        $appointmentDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $payload['appointmentDatetime']);
 
         return [
             'date' => $date,
             'email' => $payload['email'],
             'lawyerId' => (int) $payload['lawyerId'],
             'citizenId' => (int) $payload['citizenId'],
-            'datetime' => $appointmentDatetime,
-            'duration' => $payload['duration'],
+            'appointmentDatetime' => $appointmentDatetime,
+            'durationMins' => $payload['durationMins'],
             'paymentStatus' => $payload['paymentStatus'],
-            'meetingDescription' => $payload['meetingDescription'],
-            'meetingTitle' => $payload['meetingTitle'],
-            'meetingType' => $payload['meetingType'],
+            'appointmentDesc' => $payload['appointmentDesc'],
+            'appointmentTitle' => $payload['appointmentTitle'],
+            'appointmentType' => $payload['appointmentType'],
             'status' => $payload['status']
         ];
     }

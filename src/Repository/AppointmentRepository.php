@@ -38,21 +38,21 @@ class AppointmentRepository extends ServiceEntityRepository
 
         $appointmentEntity->setStatus($data['status']);
 
-        $appointmentEntity->setMeetingType($data['meetingType']);
+        $appointmentEntity->setDurationMins($data['durationMins']);
 
-        $appointmentEntity->setMeetingTitle($data['meetingTitle']);
-
-        $appointmentEntity->setDuration($data['duration']);
-
-        $appointmentEntity->setDatetime($data['datetime']);
+        $appointmentEntity->setAppointmentDatetime($data['appointmentDatetime']);
 
         $appointmentEntity->setDate($data['date']);
 
-        empty($data['meetingDescription']) ? true : $appointmentEntity->setMeetingDescription(
-            $data['meetingDescription']
+        empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
+
+        empty($data['appointmentDesc']) ? true : $appointmentEntity->setAppointmentDesc(
+            $data['appointmentDesc']
         );
 
-        empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
+        empty($data['appointmentTitle']) ? true : $appointmentEntity->setAppointmentTitle($data['appointmentTitle']);
+
+        empty($data['appointmentType']) ? true : $appointmentEntity->setAppointmentType($data['appointmentType']);
 
         try{
             $this->manager->persist($appointmentEntity);
