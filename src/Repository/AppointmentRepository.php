@@ -63,6 +63,62 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
+    public function update(array $data) : bool
+    {
+        $appointmentEntity = $this->manager->getRepository(Appointment::class)->find($data['id']);
+
+        $appointmentEntity->setEmail($data['email']);
+
+        $appointmentEntity->setLawyerId($data['lawyerId']);
+
+        $appointmentEntity->setCitizenId($data['citizenId']);
+
+        $appointmentEntity->setStatus($data['status']);
+
+        $appointmentEntity->setDurationMins($data['durationMins']);
+
+        $appointmentEntity->setAppointmentDatetime($data['appointmentDatetime']);
+
+        $appointmentEntity->setDate($data['date']);
+
+        empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
+
+        empty($data['appointmentDesc']) ? true : $appointmentEntity->setAppointmentDesc(
+            $data['appointmentDesc']
+        );
+
+        empty($data['appointmentTitle']) ? true : $appointmentEntity->setAppointmentTitle($data['appointmentTitle']);
+
+        empty($data['appointmentType']) ? true : $appointmentEntity->setAppointmentType($data['appointmentType']);
+
+        try{
+            $this->manager->persist($appointmentEntity);
+            $this->manager->flush();
+            return true;
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function updateStatus(array $data) : bool
+    {
+        $appointmentEntity = $this->manager->getRepository(Appointment::class)->find($data['id']);
+
+        $appointmentEntity->setDate($data['date']);
+
+        $appointmentEntity->setStatus($data['status']);
+
+        empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
+
+        try{
+            $this->manager->persist($appointmentEntity);
+            $this->manager->flush();
+            return true;
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     public function findAllByOffset(array $criteria) : array
     {
         return $this->createQueryBuilder('a')
@@ -72,6 +128,18 @@ class AppointmentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findAndDelete(array $data)
+    {
+        try{
+            $appointmentEntity = $this->find($data['id']);
+            $this->manager->remove($appointmentEntity);
+            $this->manager->flush();
+            return true;
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     // /**

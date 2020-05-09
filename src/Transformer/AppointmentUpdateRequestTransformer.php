@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Alex
- * Date: 7.5.2020 г.
- * Time: 19:53
+ * Date: 9.5.2020 г.
+ * Time: 15:35
  */
 
 namespace App\Transformer;
@@ -11,7 +11,7 @@ namespace App\Transformer;
 use App\Transformer\AbstractTransformer;
 use App\Helper\DateTimeHelper;
 
-class AppointmentCreateRequestTransformer extends AbstractTransformer
+class AppointmentUpdateRequestTransformer extends AbstractTransformer
 {
     /**
      * @param array $payload
@@ -24,6 +24,7 @@ class AppointmentCreateRequestTransformer extends AbstractTransformer
         $appointmentDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $payload['appointmentDatetime']);
 
         return [
+            'id' => $payload['appointmentId'],
             'date' => $date,
             'email' => $payload['email'],
             'lawyerId' => (int) $payload['lawyerId'],
