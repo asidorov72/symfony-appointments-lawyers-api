@@ -8,23 +8,29 @@
 
 namespace App\Validator\ConstraintValidator;
 
-use App\Validator\ConstraintValidator\AbstractValidator;
+use Doctrine\ORM\EntityRepository;
 
-class DuplicatedRecordsValidator extends AbstractValidator
+class DuplicatedRecordsValidator
 {
-    const DUPLICATED_RECORDS_MSG = "%s already exists.";
+    const DUPLICATED_RECORDS_MSG = "%s already reserved.";
 
-    public function validate(array $field, $repository) : array
+    const REQUESTED_RECORDS_MSG = "Record with this %s created by this user was not found.";
+
+    public function validate(
+        array $criteria,
+        EntityRepository $repository,
+        string $fieldName,
+        bool $inverse = null
+    ) : array
     {
         $errors = [];
 
-        $fieldName  = key($field);
-        $fieldValue = $field[$fieldName];
+        $res = $repository->findBy($criteria, [], 1);
 
-        $res = $repository->findBy([$fieldName => $fieldValue], [], 1);
-
-        if (!empty($res)) {
-            $errors[] = sprintf(self::DUPLICATED_RECORDS_MSG, $fieldValue);
+        if (empty($inverse) && !empty($res)) {
+            $errors[] = sprintf(self::DUPLICATED_RECORDS_MSG, $fieldName);
+        } elseif(!empty($inverse) && empty($res)) {
+            $errors[] = sprintf(self::REQUESTED_RECORDS_MSG, $fieldName);
         }
 
         return $errors;

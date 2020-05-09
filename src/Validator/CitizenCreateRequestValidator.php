@@ -43,6 +43,16 @@ class CitizenCreateRequestValidator
 
     private $citizenRepository;
 
+    /**
+     * CitizenCreateRequestValidator constructor.
+     * @param IntValidator $intValidator
+     * @param StringValidator $stringValidator
+     * @param EmailValidator $emailValidator
+     * @param EnumValidator $enumValidator
+     * @param DatetimeValidator $datetimeValidator
+     * @param DuplicatedRecordsValidator $duplicatedValidator
+     * @param CitizenRepository $citizenRepository
+     */
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,
@@ -62,6 +72,10 @@ class CitizenCreateRequestValidator
         $this->citizenRepository   = $citizenRepository;
     }
 
+    /**
+     * @param array $array
+     * @throws \Exception
+     */
     public function validate(array $array)
     {
         $errors = [];
@@ -69,7 +83,8 @@ class CitizenCreateRequestValidator
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
             ['email' => $array['email']],
-            $this->citizenRepository
+            $this->citizenRepository,
+            'Email'
         );
 
         // "email" field validation

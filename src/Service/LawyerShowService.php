@@ -25,6 +25,12 @@ class LawyerShowService
 
     private $params;
 
+    /**
+     * LawyerShowService constructor.
+     * @param LawyerRepository $lawyerRepository
+     * @param LoggerInterface $monologLogger
+     * @param ParameterBagInterface $params
+     */
     public function __construct(
         LawyerRepository $lawyerRepository,
         LoggerInterface $monologLogger,
@@ -36,6 +42,10 @@ class LawyerShowService
         $this->params           = $params;
     }
 
+    /**
+     * @param int $page
+     * @return JsonResponse
+     */
     public function show(int $page = 1) : JsonResponse
     {
         $itemsPerPage = $this->params->get('lawyers_per_page');

@@ -16,11 +16,18 @@ class SystemController
 {
     private $monologLogger;
 
+    /**
+     * SystemController constructor.
+     * @param LoggerInterface $monologLogger
+     */
     public function __construct(LoggerInterface $monologLogger)
     {
         $this->monologLogger = $monologLogger;
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function healthcheck(): JsonResponse
     {
         $this->monologLogger->info('HealthCheck response: ' . Response::HTTP_NO_CONTENT);

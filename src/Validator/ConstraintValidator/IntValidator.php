@@ -24,6 +24,11 @@ class IntValidator extends AbstractValidator
 
     const MAX_INT_VALUE_MSG = "Field %s cannot be bigger than %d.";
 
+    /**
+     * @param array $field
+     * @param $validation
+     * @return mixed
+     */
     public function validate(array $field, $validation) : array
     {
         $errors = [];

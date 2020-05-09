@@ -26,6 +26,13 @@ class LawyerController
 
     private $lawyerShowService;
 
+    /**
+     * LawyerController constructor.
+     * @param LoggerInterface $monologLogger
+     * @param AuthService $authService
+     * @param LawyerCreateService $lawyerCreateService
+     * @param LawyerShowService $lawyerShowService
+     */
     public function __construct(
         LoggerInterface $monologLogger,
         AuthService $authService,
@@ -39,6 +46,10 @@ class LawyerController
         $this->lawyerShowService   = $lawyerShowService;
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -52,6 +63,11 @@ class LawyerController
         return $this->lawyerCreateService->create($request);
     }
 
+    /**
+     * @param Request $request
+     * @param $page
+     * @return JsonResponse
+     */
     public function list(Request $request, $page): JsonResponse
     {
         try {

@@ -10,10 +10,17 @@ namespace App\Validator\ConstraintValidator;
 
 class EmailConstraints
 {
+    /**
+     * @var array|null
+     */
     public $constraints = [
         'allowEmptyValue' => false,
     ];
 
+    /**
+     * EmailConstraints constructor.
+     * @param null $constraints
+     */
     public function __construct($constraints = null)
     {
         $this->constraints = $constraints

@@ -15,11 +15,19 @@ class CitizenCreateRequestTransformer extends AbstractTransformer
 {
     private $tokenService;
 
+    /**
+     * CitizenCreateRequestTransformer constructor.
+     * @param AuthTokenService $tokenService
+     */
     public function __construct(AuthTokenService $tokenService)
     {
         $this->tokenService = $tokenService;
     }
 
+    /**
+     * @param array $payload
+     * @return mixed
+     */
     public function transform(array $payload) : array
     {
         $password = $this->tokenService->genBasicToken(

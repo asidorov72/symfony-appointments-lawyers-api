@@ -24,6 +24,11 @@ class StringValidator extends AbstractValidator
 
     const MAX_STRING_LEN_MSG = "Field %s cannot be longer than %d characters.";
 
+    /**
+     * @param array $field
+     * @param $validation
+     * @return mixed
+     */
     public function validate(array $field, $validation) : array
     {
         $errors = [];

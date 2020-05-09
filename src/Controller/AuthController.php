@@ -21,6 +21,11 @@ class AuthController
 
     private $authService;
 
+    /**
+     * AuthController constructor.
+     * @param LoggerInterface $monologLogger
+     * @param AuthService $authService
+     */
     public function __construct(
         LoggerInterface $monologLogger,
         AuthService $authService
@@ -30,6 +35,10 @@ class AuthController
         $this->authService   = $authService;
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request): JsonResponse
     {
         try {

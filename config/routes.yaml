@@ -38,13 +38,28 @@ list_lawyer:
     requirements:
         page: '\d+'
     methods: GET
-
-
 store_appointment:
     path: /appointment
     controller: App\Controller\AppointmentController::store
     methods: POST
-
-
-
+list_appointment:
+    path: /appointment/{page}
+    controller: App\Controller\AppointmentController::list
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    methods: GET
+delete_appointment:
+    path: /appointment
+    controller: App\Controller\AppointmentController::remove
+    methods: DELETE
+update_status_appointment:
+    path: /appointment
+    controller: App\Controller\AppointmentController::updateStatus
+    methods: PATCH
+update_appointment:
+    path: /appointment
+    controller: App\Controller\AppointmentController::update
+    methods: PUT
 
