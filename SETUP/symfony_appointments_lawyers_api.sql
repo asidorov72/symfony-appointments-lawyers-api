@@ -30,14 +30,15 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `appointment_desc` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `appointment_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table symfony_appointments_lawyers_api.appointment: ~3 rows (approximately)
+-- Dumping data for table symfony_appointments_lawyers_api.appointment: ~4 rows (approximately)
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
 INSERT INTO `appointment` (`id`, `lawyer_id`, `citizen_id`, `status`, `payment_status`, `date`, `appointment_datetime`, `duration_mins`, `appointment_title`, `appointment_desc`, `appointment_type`) VALUES
-	(2, 1, 9, 'rejected', 'paid', '2020-05-10 13:16:19', '2020-05-18 17:00:00', 60, NULL, 'Consultation', 'meeting'),
-	(4, 1, 8, 'pending', 'pending', '2020-05-10 12:53:22', '2020-05-16 17:00:00', 60, NULL, 'test meeting', 'meeting'),
-	(5, 1, 8, 'pending', 'pending', '2020-05-10 12:54:22', '2020-05-16 12:00:00', 60, NULL, 'test meeting', 'meeting');
+	(2, 1, 9, 'rejected', 'paid', '2020-05-10 17:23:00', '2020-05-18 17:00:00', 60, NULL, 'Consultation', 'meeting'),
+	(5, 1, 8, 'pending', 'pending', '2020-05-10 12:54:22', '2020-05-16 12:00:00', 60, NULL, 'test meeting', 'meeting'),
+	(6, 1, 8, 'pending', 'pending', '2020-05-10 15:24:37', '2020-05-18 12:00:00', 60, NULL, 'test meeting', 'meeting'),
+	(7, 1, 8, 'pending', 'pending', '2020-05-10 16:57:40', '2020-05-19 12:00:00', 60, NULL, 'test meeting', 'meeting');
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 
 -- Dumping structure for table symfony_appointments_lawyers_api.citizen
@@ -55,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `citizen` (
   `date_of_birth` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_66EE2EB5E7927C74` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table symfony_appointments_lawyers_api.citizen: ~8 rows (approximately)
 /*!40000 ALTER TABLE `citizen` DISABLE KEYS */;
@@ -67,7 +68,8 @@ INSERT INTO `citizen` (`id`, `password`, `email`, `first_name`, `last_name`, `ph
 	(7, 'a2tra2tAdGVzdG1haWwuY29tOjEyMzQ1', 'kkkkk@testmail.com', 'Testtest', 'Test', '+35988 7409673', 'Mr.', NULL, NULL, NULL, '1980-04-05'),
 	(8, 'ZXhhbXBsZS5leGFtcGxlQHRlc3RtYWlsLmNvbToxMjM0NQ==', 'example.example@testmail.com', 'Example', 'Test', '+35988 7409673', 'Mr.', NULL, NULL, NULL, '1980-04-05'),
 	(9, 'c3VwZXIubWFyaW9AdGVzdG1haWwuY29tOjEyMzQ1', 'super.mario@testmail.com', 'Mario', 'Super', '+35988999999', 'Mr.', NULL, NULL, 'Italy', '1975-03-25'),
-	(10, 'c3VwZXIubWFyaW8yQHRlc3RtYWlsLmNvbToxMjM0NQ==', 'super.mario2@testmail.com', 'Mario', 'Supersuper', '+35988999999', 'Mr.', NULL, NULL, NULL, '1975-03-25');
+	(10, 'c3VwZXIubWFyaW8yQHRlc3RtYWlsLmNvbToxMjM0NQ==', 'super.mario2@testmail.com', 'Mario', 'Supersuper', '+35988999999', 'Mr.', NULL, NULL, NULL, '1975-03-25'),
+	(11, 'c3VwZXJwdXBlci5tYXJpb0B0ZXN0bWFpbC5jb206MTIzNDU=', 'superpuper.mario@testmail.com', 'Mario', 'Superpuper', '+35988999999', 'Mr.', NULL, NULL, NULL, '1975-03-25');
 /*!40000 ALTER TABLE `citizen` ENABLE KEYS */;
 
 -- Dumping structure for table symfony_appointments_lawyers_api.lawyer
@@ -92,9 +94,9 @@ CREATE TABLE IF NOT EXISTS `lawyer` (
   `type_of_lawyer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_66437141E7927C74` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table symfony_appointments_lawyers_api.lawyer: ~15 rows (approximately)
+-- Dumping data for table symfony_appointments_lawyers_api.lawyer: ~10 rows (approximately)
 /*!40000 ALTER TABLE `lawyer` DISABLE KEYS */;
 INSERT INTO `lawyer` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `title`, `postal_code`, `postal_address`, `country`, `date_of_birth`, `company_name`, `lawyer_license_number`, `lawyer_license_issue_date`, `lawyer_license_expire_date`, `lawyer_license_name`, `lawyer_degree`, `type_of_lawyer`) VALUES
 	(1, 'isaak.katz@gmail.com', 'aXNhYWsua2F0ekBnbWFpbC5jb206MTIzNDU=', 'Isaak', 'Katz', '+359878454006', 'Mr.', '1137', 'sfdsagdsfg', 'Bulgaria', '1973-11-10', 'Test license', '432454534', '2010-11-24', '2010-11-24', NULL, 'professor', 'family'),
@@ -111,7 +113,8 @@ INSERT INTO `lawyer` (`id`, `email`, `password`, `first_name`, `last_name`, `pho
 	(13, 'exaasfsdkkkkkg@test.com', 'ZXhhYXNmc2Rra2tra2dAdGVzdC5jb206MTIzNDU=', 'Example', 'lawyer', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-10', NULL, 'professor', 'family'),
 	(14, 'hitry.zhuk@test.com', 'aGl0cnkuemh1a0B0ZXN0LmNvbToxMjM0NQ==', 'Zhuk', 'Zhuchara', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-15', NULL, 'professor', 'family'),
 	(15, 'hitry.zhuk5@test.com', 'aGl0cnkuemh1azVAdGVzdC5jb206MTIzNDU=', 'Zhuk', 'Zhuchara', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-15', NULL, 'professor', 'family'),
-	(16, 'hitry.zhuk65@test.com', 'aGl0cnkuemh1azY1QHRlc3QuY29tOjEyMzQ1', 'Zhuk', 'Zhuchara', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-15', NULL, 'professor', 'family');
+	(16, 'hitry.zhuk65@test.com', 'aGl0cnkuemh1azY1QHRlc3QuY29tOjEyMzQ1', 'Zhuk', 'Zhuchara', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-15', NULL, 'professor', 'family'),
+	(17, 'hitry.zhuk.hristo@test.com', 'aGl0cnkuemh1ay5ocmlzdG9AdGVzdC5jb206MTIzNDU=', 'Zhuk', 'Zhuchara', '+359878454006', 'Mr.', '1137', 'ul. Zlatna qbylka 1', 'UK', '1980-04-05', 'Example Lawyer & Co.', '268fab92-3418-4da3-a1f0-1d6b5a297760', '2010-11-24', '2020-05-15', NULL, 'professor', 'family');
 /*!40000 ALTER TABLE `lawyer` ENABLE KEYS */;
 
 -- Dumping structure for table symfony_appointments_lawyers_api.migration_versions
@@ -121,10 +124,11 @@ CREATE TABLE IF NOT EXISTS `migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table symfony_appointments_lawyers_api.migration_versions: ~1 rows (approximately)
+-- Dumping data for table symfony_appointments_lawyers_api.migration_versions: ~2 rows (approximately)
 /*!40000 ALTER TABLE `migration_versions` DISABLE KEYS */;
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
-	('20200510132007', '2020-05-10 13:20:23');
+	('20200510132007', '2020-05-10 13:20:23'),
+	('20200510144136', '2020-05-10 14:41:46');
 /*!40000 ALTER TABLE `migration_versions` ENABLE KEYS */;
 
 -- Dumping structure for table symfony_appointments_lawyers_api.token
@@ -135,14 +139,16 @@ CREATE TABLE IF NOT EXISTS `token` (
   `citizen_id` int(11) DEFAULT NULL,
   `lawyer_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table symfony_appointments_lawyers_api.token: ~3 rows (approximately)
+-- Dumping data for table symfony_appointments_lawyers_api.token: ~5 rows (approximately)
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
 INSERT INTO `token` (`id`, `date`, `uuid_token`, `citizen_id`, `lawyer_id`) VALUES
 	(8, '2020-05-10 14:28:49', '21aa5ad9-8408-4123-858d-69e56b710ef3', NULL, 1),
 	(10, '2020-05-10 14:29:37', '11531ee8-ddd7-4039-b9dd-184759a2c166', 1, NULL),
-	(12, '2020-05-10 14:30:36', '73dc6599-69db-40ad-a019-2a4227e68394', 5, NULL);
+	(12, '2020-05-10 14:30:36', '73dc6599-69db-40ad-a019-2a4227e68394', 5, NULL),
+	(14, '2020-05-10 15:12:04', '31fcafa7-4913-4efb-8953-1e09c0f6dde5', NULL, 2),
+	(17, '2020-05-10 16:57:02', '73d01f3d-dd11-43fe-9276-94864a3a9d0b', NULL, 4);
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

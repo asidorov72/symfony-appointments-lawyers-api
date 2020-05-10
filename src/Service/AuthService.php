@@ -143,7 +143,7 @@ class AuthService
         }
 
         if (empty($res)) {
-            throw new \Exception('Citizen does not exist!');
+            throw new \Exception(ucfirst($userType) . ' does not exist!');
         }
 
         return $res[0];

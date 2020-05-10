@@ -247,7 +247,7 @@
 			"response": []
 		},
 		{
-			"name": "POST delete appointment",
+			"name": "DELETE delete appointment",
 			"request": {
 				"method": "DELETE",
 				"header": [

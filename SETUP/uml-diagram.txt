@@ -105,7 +105,22 @@ else error bad request
    API -> U:  Return Status Code: 400
 end
 
-== 9. Citizen/Lawyer Logout\n ==
+== 9. Delete appointment\n ==
+
+autonumber 1
+U -> API: DELETE /appointment
+alt using X-Auth-Token recieved after login and appointmentId it from payload delete appointment
+   API -> DB: Accept appointment as JSON object and delete it in Database
+   API -> U:  Successfully deleted. Return Status Code: 200
+else error not authorized
+   API -> U:  Not authorized. Return Status Code: 401
+else error invalid x-auth-token
+   API -> U:  Invalid X-Auth-Token. Return Status Code: 403
+else error bad request
+   API -> U:  Return Status Code: 400
+end
+
+== 10. Citizen/Lawyer Logout\n ==
 
 autonumber 1
 U -> API: POST /logout
@@ -118,7 +133,7 @@ else error bad request
    API -> U:  Return Status Code: 400
 end
 
-== 10. Citizens list\n ==
+== 11. Citizens list\n ==
 
 autonumber 1
 U -> API: GET /citizen/{page}
@@ -131,7 +146,7 @@ else error bad request if nothing was found
    API -> U:  Return Status Code: 400
 end
 
-== 11. Lawyers list\n ==
+== 12. Lawyers list\n ==
 
 autonumber 1
 U -> API: GET /lawyer/{page}
@@ -144,7 +159,7 @@ else error bad request if nothing was found
    API -> U:  Return Status Code: 400
 end
 
-== 12. Appointments list\n ==
+== 13. Appointments list\n ==
 
 autonumber 1
 U -> API: GET /appointment/{page}
