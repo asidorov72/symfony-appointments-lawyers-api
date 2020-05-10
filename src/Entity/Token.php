@@ -26,6 +26,16 @@ class Token
      */
     private $uuidToken;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $citizenId;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lawyerId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +61,30 @@ class Token
     public function setUuidToken(string $uuidToken): self
     {
         $this->uuidToken = $uuidToken;
+
+        return $this;
+    }
+
+    public function getCitizenId(): ?int
+    {
+        return $this->citizenId;
+    }
+
+    public function setCitizenId(?int $citizenId): self
+    {
+        $this->citizenId = $citizenId;
+
+        return $this;
+    }
+
+    public function getLawyerId(): ?int
+    {
+        return $this->lawyerId;
+    }
+
+    public function setLawyerId(?int $lawyerId): self
+    {
+        $this->lawyerId = $lawyerId;
 
         return $this;
     }

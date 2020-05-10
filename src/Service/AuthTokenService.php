@@ -42,14 +42,24 @@ class AuthTokenService
     }
 
     /**
+     * @param array $userIdArray
      * @return string
      * @throws \Exception
      */
-    public function createXAuthToken(): string
+    public function createXAuthToken(array $userIdArray): string
     {
         $uuid = uuid_create(UUID_TYPE_RANDOM);
 
-        $this->tokenRepository->save(['uuidToken' => $uuid]);
+        $key = key($userIdArray);
+        $id  = $userIdArray[$key];
+
+        $deletedRows = $this->tokenRepository->removeTokenList([$key => $id]);
+
+        $this->monologLogger->info('Where deleted ' . $deletedRows . ' records.');
+
+        $this->tokenRepository->save(['uuidToken' => $uuid, $key => $id]);
+
+        $this->monologLogger->info('New token created successfully.');
 
         return $uuid;
     }

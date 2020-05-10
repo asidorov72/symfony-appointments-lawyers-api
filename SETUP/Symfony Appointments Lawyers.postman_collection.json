@@ -64,7 +64,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"super.mario@testmail.com\",\n    \"password\": {\n        \"value\": \"12345\"\n    },\n    \"title\": \"Mr.\",\n    \"firstName\": \"Mario\",\n    \"lastName\": \"Super\",\n    \"dateOfBirth\": \"1975-03-25\",\n    \"phoneNumber\": \"+35988999999\",\n    \"country\": \"Italy\",\n    \"postalCode\": \"\",\n    \"postalAddress\": \"\"\n}"
+					"raw": "{\n    \"email\": \"super.mario@testmail.com\",\n    \"password\": \"12345\",\n    \"title\": \"Mr.\",\n    \"firstName\": \"Mario\",\n    \"lastName\": \"Super\",\n    \"dateOfBirth\": \"1975-03-25\",\n    \"phoneNumber\": \"+35988999999\",\n    \"country\": \"Italy\",\n    \"postalCode\": \"\",\n    \"postalAddress\": \"\"\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/citizen",
@@ -102,7 +102,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"hitry.zhuk@test.com\",\n    \"password\": {\n        \"value\": \"12345\"\n    },\n    \"title\": \"Mr.\",\n    \"firstName\": \"Zhuk\",\n    \"lastName\": \"Zhuchara\",\n    \"dateOfBirth\": \"1980-04-05\",\n    \"phoneNumber\": \"+359878454006\",\n    \"country\": \"UK\",\n    \"postalCode\": \"1137\",\n    \"postalAddress\": \"ul. Zlatna qbylka 1\",\n    \"companyName\": \"\",\n    \"lawyerLicenseNumber\": \"268fab92-3418-4da3-a1f0-1d6b5a297760\",\n    \"lawyerLicenseIssueDate\": \"2010-11-24\",\n    \"lawyerLicenseExpireDate\": \"2020-05-15\",\n    \"lawyerLicenseName\": \"Example Lawyer & Co.\",\n    \"lawyerDegree\": \"professor\",\n    \"typeOfLawyer\": \"family\"\n}"
+					"raw": "{\n    \"email\": \"hitry.zhuk@test.com\",\n    \"password\": \"12345\",\n    \"title\": \"Mr.\",\n    \"firstName\": \"Zhuk\",\n    \"lastName\": \"Zhuchara\",\n    \"dateOfBirth\": \"1980-04-05\",\n    \"phoneNumber\": \"+359878454006\",\n    \"country\": \"UK\",\n    \"postalCode\": \"1137\",\n    \"postalAddress\": \"ul. Zlatna qbylka 1\",\n    \"companyName\": \"\",\n    \"lawyerLicenseNumber\": \"268fab92-3418-4da3-a1f0-1d6b5a297760\",\n    \"lawyerLicenseIssueDate\": \"2010-11-24\",\n    \"lawyerLicenseExpireDate\": \"2020-05-15\",\n    \"lawyerLicenseName\": \"Example Lawyer & Co.\",\n    \"lawyerDegree\": \"professor\",\n    \"typeOfLawyer\": \"family\"\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/lawyer",
@@ -139,13 +139,13 @@
 					},
 					{
 						"key": "X-Auth-Token",
-						"value": "CITIZEN_c3VwZXIubWFyaW9AdGVzdG1haWwuY29tOm",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"super.mario@testmail.com\",\n    \"lawyerId\": 1,\n    \"citizenId\": 9,\n    \"appointmentDatetime\": \"2020-05-14 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"pending\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"pending\"\n}"
+					"raw": "{\n    \"lawyerId\": 1,\n    \"citizenId\": 9,\n    \"appointmentDatetime\": \"2020-05-14 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"pending\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"pending\"\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/appointment",
@@ -183,13 +183,12 @@
 					{
 						"key": "X-Auth-Token",
 						"type": "text",
-						"value": "CITIZEN_ZXhhbXBsZUB0ZXN0bWFpbC5jb206WlhoaG",
-						"disabled": true
+						"value": "56d51ad6-8cec-4b2d-ba52-c6c2910a576d"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"appointmentId\" : 5,\n    \"email\" : \"example1@testmail.com\",\n    \"lawyerId\": 1,\n    \"citizenId\": 1,\n    \"appointmentDatetime\": \"2020-05-15 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"free\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"approved\"\n}"
+					"raw": "{\n\t\"appointmentId\" : 2,\n    \"lawyerId\": 1,\n    \"citizenId\": 9,\n    \"appointmentDatetime\": \"2020-05-18 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"free\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"approved\"\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/appointment",
@@ -227,12 +226,12 @@
 					{
 						"key": "X-Auth-Token",
 						"type": "text",
-						"value": "CITIZEN_ZXhhbXBsZS5leGFtcGxlQHRlc3RtYWlsLm"
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"appointmentId\": 9,\n    \"email\" : \"example.example@testmail.com\",\n    \"paymentStatus\": \"paid\",\n    \"status\": \"closed\"\n}"
+					"raw": "{\n    \"appointmentId\": 2,\n    \"paymentStatus\": \"free\",\n    \"status\": \"approved\"\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/appointment",
@@ -270,12 +269,12 @@
 					{
 						"key": "X-Auth-Token",
 						"type": "text",
-						"value": "CITIZEN_ZXhhbXBsZS5leGFtcGxlQHRlc3RtYWlsLm"
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"example.example@testmail.com\",\n    \"appointmentId\" : 7\n}"
+					"raw": "{\n    \"appointmentId\" : 1\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/appointment",
@@ -291,7 +290,7 @@
 			"response": []
 		},
 		{
-			"name": "POST login auth",
+			"name": "POST login",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -313,7 +312,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"example.example@testmail.com\",\r\n    \"password\": {\r\n        \"value\": \"12345\"\r\n    },\r\n    \"authType\" : \"AUTH1\" \r\n}"
+					"raw": "{\r\n    \"email\": \"isaak.katz@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"authType\" : \"AUTH2\" \r\n}"
 				},
 				"url": {
 					"raw": "http://symfony-appointments-lawyers-api/login",
@@ -323,6 +322,45 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/logout",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"logout"
 					]
 				}
 			},

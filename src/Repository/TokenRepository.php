@@ -31,6 +31,10 @@ class TokenRepository extends ServiceEntityRepository
 
         $tokenEntity->setUuidToken($data['uuidToken']);
 
+        empty($data['citizenId']) ? true : $tokenEntity->setCitizenId($data['citizenId']);
+
+        empty($data['lawyerId']) ? true : $tokenEntity->setLawyerId($data['lawyerId']);
+
         try{
             $em->persist($tokenEntity);
             $em->flush();
@@ -40,6 +44,48 @@ class TokenRepository extends ServiceEntityRepository
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function update(array $data) : bool
+    {
+        $em = $this->getEntityManager();
+
+        $tokenEntity = $em->getRepository(Token::class)->find($data['id']);
+
+        $currDate = new \DateTime("now");
+
+        $tokenEntity->setDate($currDate);
+
+        $tokenEntity->setUuidToken($data['uuidToken']);
+
+        empty($data['citizenId']) ? true : $tokenEntity->setCitizenId($data['citizenId']);
+
+        empty($data['lawyerId']) ? true : $tokenEntity->setLawyerId($data['lawyerId']);
+
+        try{
+            $em->persist($tokenEntity);
+            $em->flush();
+            return true;
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function removeTokenList(array $data)
+    {
+        $em = $this->getEntityManager();
+
+        $keyStr = key($data);
+        $valStr = $data[$keyStr];
+
+        $sqlCond  = 't.' . $keyStr . '=' . ':' . $keyStr;
+        $sqlQuery =  'DELETE FROM App\Entity\Token t WHERE ' . $sqlCond;
+
+        $query = $em->createQuery($sqlQuery)->setParameter($keyStr, $valStr);
+
+        return $query->getResult();
+    }
+
+
 
     // /**
     //  * @return Token[] Returns an array of Token objects

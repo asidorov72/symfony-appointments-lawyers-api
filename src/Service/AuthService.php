@@ -159,13 +159,16 @@ class AuthService
     {
         $basicToken = $this->authTokenService->createBasicToken($payload['email'], $payload['password']);
 
-        $savedPassword = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
+
+        $userIdKey      = $userType . 'Id';
+        $id[$userIdKey] = $this->getLawyerCitizen($payload['email'], $userType)->getId();
+        $savedPassword  = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
 
         if ($savedPassword !== $basicToken) {
             throw new \Exception('Invalid credentials.');
         }
 
-        return $this->authTokenService->createXAuthToken();
+        return $this->authTokenService->createXAuthToken([$userIdKey => $id[$userIdKey]]);
     }
 
     /**
