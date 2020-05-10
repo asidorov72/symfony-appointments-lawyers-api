@@ -13,7 +13,9 @@ use App\Validator\ConstraintValidator\{
     IntValidator,
     EnumConstraints,
     EnumValidator,
-    DuplicatedRecordsValidator
+    DuplicatedRecordsValidator,
+    PayloadConstraints,
+    PayloadValidator
 };
 use App\Repository\AppointmentRepository;
 use App\Helper\ArrayHelper;
@@ -31,24 +33,29 @@ class AppointmentUpdateStatusRequestValidator
 
     private $appointmentRepository;
 
+    private $payloadValidator;
+
     /**
      * AppointmentUpdateStatusRequestValidator constructor.
      * @param EnumValidator $enumValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
      * @param IntValidator $intValidator
      * @param AppointmentRepository $appointmentRepository
+     * @param PayloadValidator $payloadValidator
      */
     public function __construct(
         EnumValidator $enumValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
         IntValidator $intValidator,
-        AppointmentRepository $appointmentRepository
+        AppointmentRepository $appointmentRepository,
+        PayloadValidator $payloadValidator
     )
     {
         $this->enumValidator         = $enumValidator;
         $this->intValidator          = $intValidator;
         $this->duplicatedValidator   = $duplicatedValidator;
         $this->appointmentRepository = $appointmentRepository;
+        $this->payloadValidator      = $payloadValidator;
     }
 
     /**
@@ -58,6 +65,15 @@ class AppointmentUpdateStatusRequestValidator
     public function validate(array $array)
     {
         $errors = [];
+
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'appointmentId',
+                'paymentStatus',
+                'status'
+            ])
+        );
 
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(

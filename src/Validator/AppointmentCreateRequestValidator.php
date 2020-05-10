@@ -17,7 +17,9 @@ use App\Validator\ConstraintValidator\{
     EnumValidator,
     DatetimeConstraints,
     DatetimeValidator,
-    DuplicatedRecordsValidator
+    DuplicatedRecordsValidator,
+    PayloadConstraints,
+    PayloadValidator
 };
 use App\Repository\AppointmentRepository;
 use App\Repository\CitizenRepository;
@@ -43,6 +45,8 @@ class AppointmentCreateRequestValidator
 
     private $citizenRepository;
 
+    private $payloadValidator;
+
     /**
      * AppointmentCreateRequestValidator constructor.
      * @param IntValidator $intValidator
@@ -52,6 +56,7 @@ class AppointmentCreateRequestValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
      * @param AppointmentRepository $appointmentRepository
      * @param CitizenRepository $citizenRepository
+     * @param PayloadValidator $payloadValidator
      */
     public function __construct(
         IntValidator $intValidator,
@@ -60,7 +65,8 @@ class AppointmentCreateRequestValidator
         DatetimeValidator $datetimeValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
         AppointmentRepository $appointmentRepository,
-        CitizenRepository $citizenRepository
+        CitizenRepository $citizenRepository,
+        PayloadValidator $payloadValidator
     )
     {
         $this->intValidator          = $intValidator;
@@ -70,6 +76,7 @@ class AppointmentCreateRequestValidator
         $this->duplicatedValidator   = $duplicatedValidator;
         $this->appointmentRepository = $appointmentRepository;
         $this->citizenRepository     = $citizenRepository;
+        $this->payloadValidator      = $payloadValidator;
     }
 
     /**
@@ -79,6 +86,21 @@ class AppointmentCreateRequestValidator
     public function validate(array $array)
     {
         $errors = [];
+
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'lawyerId',
+                'citizenId',
+                'appointmentDatetime',
+                'durationMins',
+                'paymentStatus',
+                'appointmentDesc',
+                'appointmentTitle',
+                'appointmentType',
+                'status'
+            ])
+        );
 
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(

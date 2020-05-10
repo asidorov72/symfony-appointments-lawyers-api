@@ -157,7 +157,7 @@ class AuthService
      */
     private function isTokenValid($userType, $payload)
     {
-        $basicToken = $this->authTokenService->createBasicToken($payload['email'], $payload['password']['value']);
+        $basicToken = $this->authTokenService->createBasicToken($payload['email'], $payload['password']);
 
         $savedPassword = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
 

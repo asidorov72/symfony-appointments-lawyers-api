@@ -30,9 +30,9 @@ class LawyerCreateRequestTransformer extends AbstractTransformer
      */
     public function transform(array $payload) : array
     {
-        $password = $this->tokenService->genBasicToken(
+        $password = $this->tokenService->createBasicToken(
             $payload['email'],
-            $payload['password']['value']
+            $payload['password']
         );
 
         $dateOfBirth       = \DateTime::createFromFormat('Y-m-d', $payload['dateOfBirth']);

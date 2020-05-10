@@ -19,7 +19,9 @@ use App\Validator\ConstraintValidator\{
     EnumValidator,
     DatetimeConstraints,
     DatetimeValidator,
-    DuplicatedRecordsValidator
+    DuplicatedRecordsValidator,
+    PayloadConstraints,
+    PayloadValidator
 };
 use App\Repository\CitizenRepository;
 use App\Helper\ArrayHelper;
@@ -43,6 +45,8 @@ class CitizenCreateRequestValidator
 
     private $citizenRepository;
 
+    private $payloadValidator;
+
     /**
      * CitizenCreateRequestValidator constructor.
      * @param IntValidator $intValidator
@@ -52,6 +56,7 @@ class CitizenCreateRequestValidator
      * @param DatetimeValidator $datetimeValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
      * @param CitizenRepository $citizenRepository
+     * @param PayloadValidator $payloadValidator
      */
     public function __construct(
         IntValidator $intValidator,
@@ -60,7 +65,8 @@ class CitizenCreateRequestValidator
         EnumValidator $enumValidator,
         DatetimeValidator $datetimeValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
-        CitizenRepository $citizenRepository
+        CitizenRepository $citizenRepository,
+        PayloadValidator $payloadValidator
     )
     {
         $this->intValidator        = $intValidator;
@@ -70,6 +76,7 @@ class CitizenCreateRequestValidator
         $this->datetimeValidator   = $datetimeValidator;
         $this->duplicatedValidator = $duplicatedValidator;
         $this->citizenRepository   = $citizenRepository;
+        $this->payloadValidator    = $payloadValidator;
     }
 
     /**
@@ -79,6 +86,19 @@ class CitizenCreateRequestValidator
     public function validate(array $array)
     {
         $errors = [];
+
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'email',
+                'password',
+                'title',
+                'firstName',
+                'lastName',
+                'dateOfBirth',
+                'phoneNumber'
+            ])
+        );
 
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
@@ -95,7 +115,7 @@ class CitizenCreateRequestValidator
 
         // "password" field validation
         $errors[] = $this->stringValidator->validate(
-            ['password' => $array['password']['value']],
+            ['password' => $array['password']],
             new StringConstraints([
                 'min' => 5,
                 'max' => 50,
