@@ -88,10 +88,10 @@ class AuthService
             $headersTokenStr = array_pop($headersTokenArr);
 
             if ($apiKey !== $headersTokenStr) {
-                throw new \Exception('Not authorized!!!');
+                throw new \Exception('Not authorized.');
             }
         } else {
-            throw new \Exception('Not authorized. Headers incorrect');
+            throw new \Exception('Not authorized. Invalid headers.');
         }
     }
 
@@ -101,28 +101,16 @@ class AuthService
      */
     public function isLogged(Request $request)
     {
-        $headersXAuthToken = $request->headers->get('X-Auth-Token');
+        $xAuthToken = $request->headers->get('X-Auth-Token');
 
-        $payload = json_decode($request->getContent(), true);
+        if (!empty($xAuthToken)) {
+            $uuidToken = $this->authTokenService->getXAuthToken($xAuthToken);
 
-        if (empty($headersXAuthToken) || empty($payload['email'])) {
-            throw new \Exception('Not authorized.');
-        }
-
-        $userType = explode('_', $headersXAuthToken);
-
-        if (empty($userType[0])) {
-            throw new \Exception('Not authorized.');
+            if ($xAuthToken !== $uuidToken) {
+                throw new \Exception('Not authenticated.');
+            }
         } else {
-            $userType = strtolower($userType[0]);
-        }
-
-        try {
-            $this->isXAuthTokenValid($payload['email'], $headersXAuthToken, $userType);
-        } catch (\Exception $e) {
-            $this->monologLogger->error($e->getMessage());
-
-            throw new \Exception($e->getMessage());
+            throw new \Exception('Not authenticated. Invalid headers.');
         }
     }
 
@@ -155,7 +143,7 @@ class AuthService
         }
 
         if (empty($res)) {
-            throw new \Exception('Citizen does not exist!');
+            throw new \Exception(ucfirst($userType) . ' does not exist!');
         }
 
         return $res[0];
@@ -169,15 +157,18 @@ class AuthService
      */
     private function isTokenValid($userType, $payload)
     {
-        $basicToken = $this->authTokenService->genBasicToken($payload['email'], $payload['password']['value']);
+        $basicToken = $this->authTokenService->createBasicToken($payload['email'], $payload['password']);
 
-        $savedPassword = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
+
+        $userIdKey      = $userType . 'Id';
+        $id[$userIdKey] = $this->getLawyerCitizen($payload['email'], $userType)->getId();
+        $savedPassword  = $this->getLawyerCitizen($payload['email'], $userType)->getPassword();
 
         if ($savedPassword !== $basicToken) {
             throw new \Exception('Invalid credentials.');
         }
 
-        return $this->authTokenService->genXAuthToken($payload['email'], $basicToken, $userType);
+        return $this->authTokenService->createXAuthToken([$userIdKey => $id[$userIdKey]]);
     }
 
     /**
@@ -203,7 +194,7 @@ class AuthService
         } catch(\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         // 3. Compare token from db with the one generated of the payload
@@ -212,26 +203,26 @@ class AuthService
         } catch(\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         return new JsonResponse(['X-Auth-Token' => $authToken], Response::HTTP_OK);
     }
 
-    /**
-     * @param string $email
-     * @param string $headersXAuthToken
-     * @param string $userType
-     * @throws \Exception
-     */
-    private function isXAuthTokenValid(string $email, string $headersXAuthToken, string $userType)
+    public function signOut(Request $request)
     {
-        $basicToken = $this->getLawyerCitizen($email, $userType)->getPassword();
+        $xAuthToken = $request->headers->get('X-Auth-Token');
 
-        $xAuthToken = $this->authTokenService->genXAuthToken($email, $basicToken, $userType);
+        try{
+            $this->authTokenService->deleteXAuthToken($xAuthToken);
 
-        if ($headersXAuthToken !== $xAuthToken) {
-            throw new \Exception('Invalid X-Auth-Token.');
+            $this->monologLogger->info('X-Auth-Token was successfully deleted.');
+        } catch(\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

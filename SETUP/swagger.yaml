@@ -1,0 +1,927 @@
+openapi: "3.0.0"
+
+servers:
+  - url: "http://symfony-appointments-lawyers-api/"
+
+info:
+  title: "Symfony 5 Appointments Lawyers RESTful API"
+  description: |-
+    Develop a web-based application for citizens and lawyers.  The application is an online registry for citizens who want to make appointments with lawyers
+  version: "2.0.0"
+
+externalDocs:
+  description: |-
+    Find Symfony documentation here
+  url: "https://symfony.com/doc/current/index.html#gsc.tab=0"
+
+tags:
+  - name: "check"
+    description: "Check endpoints"
+
+paths:
+  # Check
+  /:
+    get:
+      tags:
+        - "check"
+      parameters:
+        - name: index
+          description: |-
+            Test index page
+          in: path
+          required: true
+          example:
+          schema:
+            type: string
+
+      summary: |-
+        Forbidden index page
+      responses:
+        "404":
+          description: "Successful response"
+
+  /healthcheck:
+    get:
+      tags:
+        - "check"
+      summary: |-
+        Checks if the application is accessable
+      responses:
+        "204":
+          description: "Successful response. No content"
+
+        "500":
+          description: "Server Error"
+
+  /citizen:
+    post:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Add citizen to the Appointments Lawyers RESTful API
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                  "email": "superpuper.mario@testmail.com",
+                  "password": "12345",
+                  "firstName": "Mario",
+                  "title": "Mr.",
+                  "lastName": "Superpuper",
+                  "dateOfBirth": "1975-03-25",
+                  "phoneNumber": "+35988999999",
+                  "country": "",
+                  "postalCode": "",
+                  "postalAddress": ""
+                }
+      responses:
+        "201":
+          description: |-
+            The Service will respond with HTTP code 201 and a json
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                    "status": "Citizen was created!"
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Email address superpuper.mario@testmailcom is not valid."
+                  }
+        "401":
+          description: "Unauthorized. Basic authorization token is missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+  /lawyer:
+    post:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Add lawyer to the Appointments Lawyers RESTful API
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                  "email": "hitry.zhuk.hristo@test.com",
+                  "password": "12345",
+                  "title": "Mr.",
+                  "firstName": "Zhuk",
+                  "lastName": "Zhuchara",
+                  "dateOfBirth": "1980-04-05",
+                  "phoneNumber": "+359878454006",
+                  "country": "UK",
+                  "postalCode": "1137",
+                  "postalAddress": "ul. Zlatna qbylka 1",
+                  "companyName": "",
+                  "lawyerLicenseNumber": "268fab92-3418-4da3-a1f0-1d6b5a297760",
+                  "lawyerLicenseIssueDate": "2010-11-24",
+                  "lawyerLicenseExpireDate": "2020-05-15",
+                  "lawyerLicenseName": "Example Lawyer & Co.",
+                  "lawyerDegree": "professor",
+                  "typeOfLawyer": "family"
+                }
+      responses:
+        "201":
+          description: |-
+            The Service will respond with HTTP code 201 and a json
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                    "status": "Lawyer was created!"
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Email already reserved."
+                  }
+        "401":
+          description: "Unauthorized. Basic authorization token is missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+
+  /login:
+    post:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Using credentials from the payload should be generated and returned X-Auth-Token (uuid).
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                  "email": "lee.cooper@gmail.com",
+                  "password": "12345",
+                  "authType" : "AUTH2"
+                }
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 and a json
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                    "X-Auth-Token": "a2a2faf7-0dc1-4753-afcf-c94e6c5ba44c"
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Email already reserved."
+                  }
+        "403":
+          description: "Forbidden."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Lawyer does not exist!"
+                  }
+
+  /appointment:
+    post:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+          example: 24ab574b-1772-4fd5-b8c2-c25bd54ea63a
+      summary: |-
+        Using X-Auth-Token recieved after login can be requested an appointment to lawyer.
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                  "lawyerId": 1,
+                  "citizenId": 8,
+                  "appointmentDatetime": "2020-05-18 12:00:00",
+                  "durationMins": 60,
+                  "paymentStatus": "pending",
+                  "appointmentDesc": "test meeting",
+                  "appointmentTitle": "",
+                  "appointmentType": "meeting",
+                  "status": "pending"
+                }
+      responses:
+        "201":
+          description: |-
+            The Service will respond with HTTP code 201 and a json when appointment was successfully created.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                    "status": "Appointment was requested!"
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "AppointmentDatetime already reserved."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+        "403":
+          description: "Forbidden. X-Auth-Token missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authenticated."
+                  }
+
+  /appointment/:
+    put:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+          example: 24ab574b-1772-4fd5-b8c2-c25bd54ea63a
+      summary: |-
+        Using X-Auth-Token recieved after login we can update a requested appointment.
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                	"appointmentId" : 2,
+                  "lawyerId": 1,
+                  "citizenId": 9,
+                  "appointmentDatetime": "2020-05-18 17:00:00",
+                  "durationMins": 60,
+                  "paymentStatus": "paid",
+                  "appointmentDesc": "Consultation",
+                  "appointmentTitle": "",
+                  "appointmentType": "meeting",
+                  "status": "approved"
+                }
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 and a json when appointment was successfully updated.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                    "status": "Appointment was modified!"
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                     "errorMessage": "Record with this AppointmentId was not found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+        "403":
+          description: "Forbidden. X-Auth-Token missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authenticated."
+                  }
+
+  /appointment//:
+    patch:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+          example: 24ab574b-1772-4fd5-b8c2-c25bd54ea63a
+      summary: |-
+        Using X-Auth-Token recieved after login we can update some status fields in the requested appointment such as status, paymentStatus.
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                	"appointmentId": 2,
+                  "paymentStatus": "paid",
+                  "status": "rejected"
+                }
+      responses:
+        "204":
+          description: |-
+            The Service will respond with HTTP code 204 without any content.
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                     "errorMessage": "Record with this AppointmentId was not found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+        "403":
+          description: "Forbidden. X-Auth-Token missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authenticated."
+                  }
+
+  /appointment///:
+    delete:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+          example: 24ab574b-1772-4fd5-b8c2-c25bd54ea63a
+      summary: |-
+        Using X-Auth-Token recieved after login and appointmentId element taken from JSON payload we can delete the requested appointment.
+      requestBody:
+        description: |-
+          JSON string posted from the Drop-in form
+        content:
+          "application/json":
+            schema:
+              type: object
+              example:
+                {
+                	 "appointmentId" : 3
+                }
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 OK.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                     "status": "Appointment was successfully deleted."
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                     "errorMessage": "Record with this AppointmentId was not found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+        "403":
+          description: "Forbidden. X-Auth-Token missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authenticated."
+                  }
+
+  /logout:
+    post:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Auth-Token
+          in: header
+          schema:
+            type: string
+          example: 24ab574b-1772-4fd5-b8c2-c25bd54ea63a
+      summary: |-
+        Logout from the Application.
+
+      responses:
+        "204":
+          description: |-
+            The Service will respond with HTTP code 204 NO CONTENT.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: {
+                     "status": "Appointment was successfully deleted."
+                  }
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                     "errorMessage": "Record with this AppointmentId was not found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+        "403":
+          description: "Forbidden. X-Auth-Token missing or invalid"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authenticated."
+                  }
+
+  /citizen/3:
+    get:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Show a List of Citizens by pages.
+
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 OK and JSON of result records.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: [
+                      {
+                        "id": 11,
+                        "email": "superpuper.mario@testmail.com",
+                        "firstName": "Mario",
+                        "lastName": "Superpuper",
+                        "password": "c3VwZXJwdXBlci5tYXJpb0B0ZXN0bWFpbC5jb206MTIzNDU=",
+                        "phoneNumber": "+35988999999",
+                        "title": "Mr.",
+                        "dateOfBirth": {
+                            "date": "1975-03-25 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "country": null,
+                        "postalCode": null,
+                        "postalAddress": null
+                      }
+                  ]
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Nothing was found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+
+  /lawyer/1:
+    get:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Show a List of Lawyers by pages.
+
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 OK and JSON of result records.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: [
+                     {
+                        "id": 6,
+                        "email": "example_lawyer@test.com",
+                        "firstName": "Example",
+                        "lastName": "lawyer",
+                        "password": "ZXhhbXBsZV9sYXd5ZXJAdGVzdC5jb206MTIzNDU=",
+                        "phoneNumber": "+359878454006",
+                        "title": "Mr.",
+                        "dateOfBirth": {
+                            "date": "1980-04-05 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "country": "UK",
+                        "postalCode": "1137",
+                        "postalAddress": "ul. Zlatna qbylka 1",
+                        "companyName": "Example Lawyer & Co.",
+                        "lawyerLicenseNumber": "268fab92-3418-4da3-a1f0-1d6b5a297760",
+                        "lawyerLicenseIssueDate": {
+                            "date": "2010-11-24 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "lawyerLicenseExpireDate": {
+                            "date": "2023-05-09 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "lawyerLicenseName": null,
+                        "lawyerDegree": "professor",
+                        "typeOfLawyer": "family"
+                    },
+                    {
+                        "id": 7,
+                        "email": "example___lawyer@test.com",
+                        "firstName": "Example",
+                        "lastName": "lawyer",
+                        "password": "ZXhhbXBsZV9fX2xhd3llckB0ZXN0LmNvbToxMjM0NQ==",
+                        "phoneNumber": "+359878454006",
+                        "title": "Mr.",
+                        "dateOfBirth": {
+                            "date": "1980-04-05 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "country": "UK",
+                        "postalCode": "1137",
+                        "postalAddress": "ul. Zlatna qbylka 1",
+                        "companyName": "Example Lawyer & Co.",
+                        "lawyerLicenseNumber": "268fab92-3418-4da3-a1f0-1d6b5a297760",
+                        "lawyerLicenseIssueDate": {
+                            "date": "2010-11-24 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "lawyerLicenseExpireDate": {
+                            "date": "2020-05-07 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "UTC"
+                        },
+                        "lawyerLicenseName": null,
+                        "lawyerDegree": "professor",
+                        "typeOfLawyer": "family"
+                    }
+                  ]
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Nothing was found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+
+  /appointment/1:
+    get:
+      tags:
+        - "check"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Basic YXNpZG9yb3Y3Mjp0T3NIaWs=
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      summary: |-
+        Show a List of requested Appointments by pages.
+
+      responses:
+        "200":
+          description: |-
+            The Service will respond with HTTP code 200 OK and JSON of result records.
+          content:
+            application/json:
+              examples:
+                success:
+                  value: [
+                      {
+                          "id": 2,
+                          "lawyerId": 1,
+                          "citizenId": 9,
+                          "status": "rejected",
+                          "appointmentType": "meeting",
+                          "appointmentTitle": null,
+                          "appointmentDesc": "Consultation",
+                          "paymentStatus": "paid",
+                          "durationMins": 60,
+                          "appointmentDatetime": {
+                              "date": "2020-05-18 17:00:00.000000",
+                              "timezone_type": 3,
+                              "timezone": "UTC"
+                          },
+                          "date": {
+                              "date": "2020-05-10 17:23:00.000000",
+                              "timezone_type": 3,
+                              "timezone": "UTC"
+                          }
+                      },
+                      {
+                          "id": 5,
+                          "lawyerId": 1,
+                          "citizenId": 8,
+                          "status": "pending",
+                          "appointmentType": "meeting",
+                          "appointmentTitle": null,
+                          "appointmentDesc": "test meeting",
+                          "paymentStatus": "pending",
+                          "durationMins": 60,
+                          "appointmentDatetime": {
+                              "date": "2020-05-16 12:00:00.000000",
+                              "timezone_type": 3,
+                              "timezone": "UTC"
+                          },
+                          "date": {
+                              "date": "2020-05-10 12:54:22.000000",
+                              "timezone_type": 3,
+                              "timezone": "UTC"
+                          }
+                      }
+                  ]
+        "400":
+          description: "Exception was thrown. Bad request"
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Nothing was found."
+                  }
+        "401":
+          description: "Basic token missing or invalid."
+          content:
+            application/json:
+              examples:
+                exception:
+                  value: {
+                    "errorMessage": "Not authorized. Invalid headers."
+                  }
+
+

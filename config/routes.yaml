@@ -14,6 +14,10 @@ login_auth:
     path: /login
     controller: App\Controller\AuthController::login
     methods: POST
+logout_auth:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+    methods: POST
 store_citizen:
     path: /citizen
     controller: App\Controller\CitizenController::store

@@ -8,7 +8,13 @@
 
 namespace App\Validator;
 
-use App\Validator\ConstraintValidator\{IntConstraints, IntValidator, DuplicatedRecordsValidator};
+use App\Validator\ConstraintValidator\{
+    IntConstraints,
+    IntValidator,
+    DuplicatedRecordsValidator,
+    PayloadConstraints,
+    PayloadValidator
+};
 use App\Repository\AppointmentRepository;
 use App\Helper\ArrayHelper;
 
@@ -23,21 +29,26 @@ class AppointmentDeleteRequestValidator
 
     private $appointmentRepository;
 
+    private $payloadValidator;
+
     /**
      * AppointmentDeleteRequestValidator constructor.
-     * @param IntValidator $intValidator
-     * @param DuplicatedRecordsValidator $duplicatedValidator
+     * @param \IntValidator $intValidator
+     * @param \DuplicatedRecordsValidator $duplicatedValidator
      * @param AppointmentRepository $appointmentRepository
+     * @param \PayloadValidator $payloadValidator
      */
     public function __construct(
         IntValidator $intValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
-        AppointmentRepository $appointmentRepository
+        AppointmentRepository $appointmentRepository,
+        PayloadValidator $payloadValidator
     )
     {
         $this->intValidator          = $intValidator;
         $this->duplicatedValidator   = $duplicatedValidator;
         $this->appointmentRepository = $appointmentRepository;
+        $this->payloadValidator      = $payloadValidator;
     }
 
     /**
@@ -48,11 +59,17 @@ class AppointmentDeleteRequestValidator
     {
         $errors = [];
 
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'appointmentId'
+            ])
+        );
+
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
             [
-                'id' => $array['appointmentId'],
-                'email' => $array['email']
+                'id' => $array['appointmentId']
             ],
             $this->appointmentRepository,
             'AppointmentId',

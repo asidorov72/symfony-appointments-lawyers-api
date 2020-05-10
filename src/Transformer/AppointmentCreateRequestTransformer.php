@@ -9,7 +9,6 @@
 namespace App\Transformer;
 
 use App\Transformer\AbstractTransformer;
-use App\Helper\DateTimeHelper;
 
 class AppointmentCreateRequestTransformer extends AbstractTransformer
 {
@@ -19,13 +18,9 @@ class AppointmentCreateRequestTransformer extends AbstractTransformer
      */
     public function transform(array $payload) : array
     {
-        $datetimeStr         = DateTimeHelper::getCurrentDatetime();
-        $date                = \DateTime::createFromFormat('Y-m-d H:i:s', $datetimeStr);
         $appointmentDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $payload['appointmentDatetime']);
 
         return [
-            'date' => $date,
-            'email' => $payload['email'],
             'lawyerId' => (int) $payload['lawyerId'],
             'citizenId' => (int) $payload['citizenId'],
             'appointmentDatetime' => $appointmentDatetime,

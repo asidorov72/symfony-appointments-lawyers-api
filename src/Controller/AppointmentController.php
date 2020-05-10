@@ -17,7 +17,6 @@ use App\Service\AppointmentCreateService;
 use App\Service\AppointmentShowService;
 use App\Service\AppointmentDeleteService;
 use App\Service\AppointmentUpdateService;
-use App\Service\AppointmentUpdateStatusService;
 
 class AppointmentController
 {
@@ -33,8 +32,6 @@ class AppointmentController
 
     private $appointmentUpdateService;
 
-    private $appointmentUpdateStatusService;
-
     /**
      * AppointmentController constructor.
      * @param LoggerInterface $monologLogger
@@ -43,7 +40,6 @@ class AppointmentController
      * @param AppointmentShowService $appointmentShowService
      * @param AppointmentDeleteService $appointmentDeleteService
      * @param AppointmentUpdateService $appointmentUpdateService
-     * @param AppointmentUpdateStatusService $appointmentUpdateStatusService
      */
     public function __construct(
         LoggerInterface $monologLogger,
@@ -51,8 +47,7 @@ class AppointmentController
         AppointmentCreateService $appointmentCreateService,
         AppointmentShowService $appointmentShowService,
         AppointmentDeleteService $appointmentDeleteService,
-        AppointmentUpdateService $appointmentUpdateService,
-        AppointmentUpdateStatusService $appointmentUpdateStatusService
+        AppointmentUpdateService $appointmentUpdateService
     )
     {
         $this->monologLogger                  = $monologLogger;
@@ -61,7 +56,6 @@ class AppointmentController
         $this->appointmentShowService         = $appointmentShowService;
         $this->appointmentDeleteService       = $appointmentDeleteService;
         $this->appointmentUpdateService       = $appointmentUpdateService;
-        $this->appointmentUpdateStatusService = $appointmentUpdateStatusService;
     }
 
     /**
@@ -83,7 +77,7 @@ class AppointmentController
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         return $this->appointmentCreateService->create($request);
@@ -126,7 +120,7 @@ class AppointmentController
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         return  $this->appointmentDeleteService->delete($request);
@@ -151,10 +145,10 @@ class AppointmentController
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
-        return  $this->appointmentUpdateStatusService->updateStatus($request);
+        return  $this->appointmentUpdateService->updateStatus($request);
     }
 
     /**
@@ -169,6 +163,14 @@ class AppointmentController
             $this->monologLogger->error($e->getMessage());
 
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            $this->authService->isLogged($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         return  $this->appointmentUpdateService->update($request);

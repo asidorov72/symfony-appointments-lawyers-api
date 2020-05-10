@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Transformer\AppointmentUpdateRequestTransformer;
 use App\Validator\AppointmentUpdateRequestValidator;
+use App\Transformer\AppointmentUpdateStatusRequestTransformer;
+use App\Validator\AppointmentUpdateStatusRequestValidator;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -27,19 +29,27 @@ class AppointmentUpdateService
 
     private $appointmentUpdateRequestTransformer;
 
+    private $appointmentUpdateStatusRequestValidator;
+
+    private $appointmentUpdateStatusRequestTransformer;
+
     private $monologLogger;
 
     public function __construct(
         AppointmentRepository $appointmentRepository,
         LoggerInterface $monologLogger,
         AppointmentUpdateRequestValidator $appointmentUpdateRequestValidator,
-        AppointmentUpdateRequestTransformer $appointmentUpdateRequestTransformer
+        AppointmentUpdateRequestTransformer $appointmentUpdateRequestTransformer,
+        AppointmentUpdateStatusRequestValidator $appointmentUpdateStatusRequestValidator,
+        AppointmentUpdateStatusRequestTransformer $appointmentUpdateStatusRequestTransformer
     )
     {
         $this->appointmentRepository               = $appointmentRepository;
         $this->monologLogger                       = $monologLogger;
         $this->appointmentUpdateRequestValidator   = $appointmentUpdateRequestValidator;
         $this->appointmentUpdateRequestTransformer = $appointmentUpdateRequestTransformer;
+        $this->appointmentUpdateStatusRequestValidator   = $appointmentUpdateStatusRequestValidator;
+        $this->appointmentUpdateStatusRequestTransformer = $appointmentUpdateStatusRequestTransformer;
     }
 
     /**
@@ -70,6 +80,37 @@ class AppointmentUpdateService
 
         $this->monologLogger->info('Appointment was modified!');
 
-        return new JsonResponse(['status' => 'Appointment was modified!'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Appointment was modified!'], Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateStatus(Request $request) : JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        try {
+            $this->appointmentUpdateStatusRequestValidator->validate($payload);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+
+        $payload = $this->appointmentUpdateStatusRequestTransformer->transform($payload);
+
+        try{
+            $this->appointmentRepository->updateStatus($payload);
+        } catch(\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->monologLogger->info('Appointment status was modified!');
+
+        return new JsonResponse(['status' => 'Appointment status was modified!'], Response::HTTP_NO_CONTENT);
     }
 }

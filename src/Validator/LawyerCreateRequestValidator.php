@@ -19,7 +19,9 @@ use App\Validator\ConstraintValidator\{
     EnumValidator,
     DatetimeConstraints,
     DatetimeValidator,
-    DuplicatedRecordsValidator
+    DuplicatedRecordsValidator,
+    PayloadConstraints,
+    PayloadValidator
 };
 use App\Repository\LawyerRepository;
 use App\Helper\ArrayHelper;
@@ -43,6 +45,8 @@ class LawyerCreateRequestValidator
 
     private $lawyerRepository;
 
+    private $payloadValidator;
+
     /**
      * LawyerCreateRequestValidator constructor.
      * @param IntValidator $intValidator
@@ -52,6 +56,7 @@ class LawyerCreateRequestValidator
      * @param DatetimeValidator $datetimeValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
      * @param LawyerRepository $lawyerRepository
+     * @param PayloadValidator $payloadValidator
      */
     public function __construct(
         IntValidator $intValidator,
@@ -60,7 +65,8 @@ class LawyerCreateRequestValidator
         EnumValidator $enumValidator,
         DatetimeValidator $datetimeValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
-        LawyerRepository $lawyerRepository
+        LawyerRepository $lawyerRepository,
+        PayloadValidator $payloadValidator
     )
     {
         $this->intValidator        = $intValidator;
@@ -70,6 +76,7 @@ class LawyerCreateRequestValidator
         $this->datetimeValidator   = $datetimeValidator;
         $this->duplicatedValidator = $duplicatedValidator;
         $this->lawyerRepository    = $lawyerRepository;
+        $this->payloadValidator    = $payloadValidator;
     }
 
     /**
@@ -79,6 +86,27 @@ class LawyerCreateRequestValidator
     public function validate(array $array)
     {
         $errors = [];
+
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'email',
+                'password',
+                'title',
+                'firstName',
+                'lastName',
+                'dateOfBirth',
+                'phoneNumber',
+                'country',
+                'postalCode',
+                'postalAddress',
+                'lawyerLicenseNumber',
+                'lawyerLicenseIssueDate',
+                'lawyerLicenseExpireDate',
+                'lawyerDegree',
+                'typeOfLawyer'
+            ])
+        );
 
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
@@ -95,7 +123,7 @@ class LawyerCreateRequestValidator
 
         // "password" field validation
         $errors[] = $this->stringValidator->validate(
-            ['password' => $array['password']['value']],
+            ['password' => $array['password']],
             new StringConstraints([
                 'min' => 5,
                 'max' => 50,

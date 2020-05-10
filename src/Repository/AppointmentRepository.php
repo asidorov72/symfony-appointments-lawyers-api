@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Appointment|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,22 +14,20 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AppointmentRepository extends ServiceEntityRepository
 {
-    public function __construct
-    (
-        ManagerRegistry $registry,
-        EntityManagerInterface $manager
-    )
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Appointment::class);
-
-        $this->manager = $manager;
     }
 
     public function save(array $data) : bool
     {
+        $em = $this->getEntityManager();
+
         $appointmentEntity = new Appointment();
 
-        $appointmentEntity->setEmail($data['email']);
+        $currDate = new \DateTime("now");
+
+        $appointmentEntity->setDate($currDate);
 
         $appointmentEntity->setLawyerId($data['lawyerId']);
 
@@ -41,8 +38,6 @@ class AppointmentRepository extends ServiceEntityRepository
         $appointmentEntity->setDurationMins($data['durationMins']);
 
         $appointmentEntity->setAppointmentDatetime($data['appointmentDatetime']);
-
-        $appointmentEntity->setDate($data['date']);
 
         empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
 
@@ -55,8 +50,9 @@ class AppointmentRepository extends ServiceEntityRepository
         empty($data['appointmentType']) ? true : $appointmentEntity->setAppointmentType($data['appointmentType']);
 
         try{
-            $this->manager->persist($appointmentEntity);
-            $this->manager->flush();
+            $em->persist($appointmentEntity);
+            $em->flush();
+
             return true;
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -65,9 +61,13 @@ class AppointmentRepository extends ServiceEntityRepository
 
     public function update(array $data) : bool
     {
-        $appointmentEntity = $this->manager->getRepository(Appointment::class)->find($data['id']);
+        $em = $this->getEntityManager();
 
-        $appointmentEntity->setEmail($data['email']);
+        $appointmentEntity = $em->getRepository(Appointment::class)->find($data['id']);
+
+        $currDate = new \DateTime("now");
+
+        $appointmentEntity->setDate($currDate);
 
         $appointmentEntity->setLawyerId($data['lawyerId']);
 
@@ -78,8 +78,6 @@ class AppointmentRepository extends ServiceEntityRepository
         $appointmentEntity->setDurationMins($data['durationMins']);
 
         $appointmentEntity->setAppointmentDatetime($data['appointmentDatetime']);
-
-        $appointmentEntity->setDate($data['date']);
 
         empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
 
@@ -92,8 +90,8 @@ class AppointmentRepository extends ServiceEntityRepository
         empty($data['appointmentType']) ? true : $appointmentEntity->setAppointmentType($data['appointmentType']);
 
         try{
-            $this->manager->persist($appointmentEntity);
-            $this->manager->flush();
+            $em->persist($appointmentEntity);
+            $em->flush();
             return true;
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -102,17 +100,21 @@ class AppointmentRepository extends ServiceEntityRepository
 
     public function updateStatus(array $data) : bool
     {
-        $appointmentEntity = $this->manager->getRepository(Appointment::class)->find($data['id']);
+        $em = $this->getEntityManager();
 
-        $appointmentEntity->setDate($data['date']);
+        $appointmentEntity = $em->getRepository(Appointment::class)->find($data['id']);
+
+        $currDate = new \DateTime("now");
+
+        $appointmentEntity->setDate($currDate);
 
         $appointmentEntity->setStatus($data['status']);
 
         empty($data['paymentStatus']) ? true : $appointmentEntity->setPaymentStatus($data['paymentStatus']);
 
         try{
-            $this->manager->persist($appointmentEntity);
-            $this->manager->flush();
+            $em->persist($appointmentEntity);
+            $em->flush();
             return true;
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -132,10 +134,12 @@ class AppointmentRepository extends ServiceEntityRepository
 
     public function findAndDelete(array $data)
     {
+        $em = $this->getEntityManager();
+
         try{
             $appointmentEntity = $this->find($data['id']);
-            $this->manager->remove($appointmentEntity);
-            $this->manager->flush();
+            $em->remove($appointmentEntity);
+            $em->flush();
             return true;
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());

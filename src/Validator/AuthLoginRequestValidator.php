@@ -16,7 +16,9 @@ use App\Validator\ConstraintValidator\{
     EmailConstraints,
     EmailValidator,
     EnumConstraints,
-    EnumValidator
+    EnumValidator,
+    PayloadConstraints,
+    PayloadValidator
 };
 use App\Service\AuthService;
 use App\Helper\ArrayHelper;
@@ -34,29 +36,43 @@ class AuthLoginRequestValidator
 
     private $enumValidator;
 
+    private $payloadValidator;
+
     /**
      * AuthLoginRequestValidator constructor.
      * @param IntValidator $intValidator
      * @param StringValidator $stringValidator
      * @param EmailValidator $emailValidator
      * @param EnumValidator $enumValidator
+     * @param PayloadValidator $payloadValidator
      */
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,
         EmailValidator $emailValidator,
-        EnumValidator $enumValidator
+        EnumValidator $enumValidator,
+        PayloadValidator $payloadValidator
     )
     {
-        $this->intValidator    = $intValidator;
-        $this->stringValidator = $stringValidator;
-        $this->emailValidator  = $emailValidator;
-        $this->enumValidator   = $enumValidator;
+        $this->intValidator     = $intValidator;
+        $this->stringValidator  = $stringValidator;
+        $this->emailValidator   = $emailValidator;
+        $this->enumValidator    = $enumValidator;
+        $this->payloadValidator = $payloadValidator;
     }
 
     public function validate(array $array)
     {
         $errors = [];
+
+        $this->payloadValidator->validate(
+            $array,
+            new PayloadConstraints([
+                'email',
+                'password',
+                'authType'
+            ])
+        );
 
         // "email" field validation
         $errors[] = $this->emailValidator->validate(
@@ -66,7 +82,7 @@ class AuthLoginRequestValidator
 
         // "password" field validation
         $errors[] = $this->stringValidator->validate(
-            ['password' => $array['password']['value']],
+            ['password' => $array['password']],
             new StringConstraints([
                 'min' => 5,
                 'max' => 50,

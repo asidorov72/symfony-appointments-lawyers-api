@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "fd1295c4-3a0f-4bc6-9b89-6031b275531b",
+		"name": "Symfony Appointments Lawyers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/healthcheck",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST store citizen",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs=",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"super.mario@testmail.com\",\n    \"password\": \"12345\",\n    \"title\": \"Mr.\",\n    \"firstName\": \"Mario\",\n    \"lastName\": \"Super\",\n    \"dateOfBirth\": \"1975-03-25\",\n    \"phoneNumber\": \"+35988999999\",\n    \"country\": \"Italy\",\n    \"postalCode\": \"\",\n    \"postalAddress\": \"\"\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/citizen",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"citizen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST store lawyer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"hitry.zhuk@test.com\",\n    \"password\": \"12345\",\n    \"title\": \"Mr.\",\n    \"firstName\": \"Zhuk\",\n    \"lastName\": \"Zhuchara\",\n    \"dateOfBirth\": \"1980-04-05\",\n    \"phoneNumber\": \"+359878454006\",\n    \"country\": \"UK\",\n    \"postalCode\": \"1137\",\n    \"postalAddress\": \"ul. Zlatna qbylka 1\",\n    \"companyName\": \"\",\n    \"lawyerLicenseNumber\": \"268fab92-3418-4da3-a1f0-1d6b5a297760\",\n    \"lawyerLicenseIssueDate\": \"2010-11-24\",\n    \"lawyerLicenseExpireDate\": \"2020-05-15\",\n    \"lawyerLicenseName\": \"Example Lawyer & Co.\",\n    \"lawyerDegree\": \"professor\",\n    \"typeOfLawyer\": \"family\"\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/lawyer",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"lawyer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST store appointment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lawyerId\": 1,\n    \"citizenId\": 9,\n    \"appointmentDatetime\": \"2020-05-14 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"pending\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"pending\"\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/appointment",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT update appointment",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"type": "text",
+						"value": "56d51ad6-8cec-4b2d-ba52-c6c2910a576d"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"appointmentId\" : 2,\n    \"lawyerId\": 1,\n    \"citizenId\": 9,\n    \"appointmentDatetime\": \"2020-05-18 17:00:00\",\n    \"durationMins\": 60,\n    \"paymentStatus\": \"free\",\n    \"appointmentDesc\": \"test meeting\",\n    \"appointmentTitle\": \"\",\n    \"appointmentType\": \"meeting\",\n    \"status\": \"approved\"\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/appointment",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH update status appointment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"type": "text",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appointmentId\": 2,\n    \"paymentStatus\": \"free\",\n    \"status\": \"approved\"\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/appointment",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE delete appointment",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"type": "text",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appointmentId\" : 1\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/appointment",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"isaak.katz@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"authType\" : \"AUTH2\" \r\n}"
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/login",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "d60fe64f-d0ce-4619-bbef-344877a2fb3c",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/logout",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET list citizen {by page}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/citizen/4",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"citizen",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET list lawyer {by page}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/lawyer/7",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"lawyer",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET list appointment {by page} ",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic YXNpZG9yb3Y3Mjp0T3NIaWs="
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://symfony-appointments-lawyers-api/appointment",
+					"protocol": "http",
+					"host": [
+						"symfony-appointments-lawyers-api"
+					],
+					"path": [
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
