@@ -46,9 +46,30 @@ class AuthController
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
         }
 
         return $this->authService->signIn($request);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        try {
+            $this->authService->isAuthorized($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            $this->authService->isLogged($request);
+        } catch (\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
+        }
+
+        return $this->authService->signOut($request);
     }
 }

@@ -9,7 +9,6 @@
 namespace App\Transformer;
 
 use App\Transformer\AbstractTransformer;
-use App\Helper\DateTimeHelper;
 
 class AppointmentUpdateStatusRequestTransformer extends AbstractTransformer
 {
@@ -19,12 +18,8 @@ class AppointmentUpdateStatusRequestTransformer extends AbstractTransformer
      */
     public function transform(array $payload) : array
     {
-        $datetimeStr         = DateTimeHelper::getCurrentDatetime();
-        $date                = \DateTime::createFromFormat('Y-m-d H:i:s', $datetimeStr);
-
         return [
             'id' => $payload['appointmentId'],
-            'date' => $date,
             'paymentStatus' => $payload['paymentStatus'],
             'status' => $payload['status']
         ];

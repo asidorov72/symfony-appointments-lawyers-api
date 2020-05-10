@@ -69,7 +69,6 @@ class AppointmentShowService
         foreach ($appointmentList as $appointment) {
             $data[] = [
                 'id' => $appointment->getId(),
-                'email' => $appointment->getEmail(),
                 'lawyerId' => $appointment->getLawyerId(),
                 'citizenId' => $appointment->getCitizenId(),
                 'status' => $appointment->getStatus(),

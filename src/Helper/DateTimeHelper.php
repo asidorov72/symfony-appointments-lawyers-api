@@ -95,19 +95,6 @@ class DateTimeHelper
     }
 
     /**
-     * @param string $format
-     * @param string $timeZone
-     * @return string
-     */
-    public static function getCurrentDatetime(string $format = 'Y-m-d H:i:s', string $timeZone = 'UTC')
-    {
-        $d = new \DateTime('NOW');
-        $d->setTimezone(new \DateTimeZone($timeZone));
-
-        return $d->format($format);
-    }
-
-    /**
      * @param string $datetime
      * @param string $format
      * @return \DateTime

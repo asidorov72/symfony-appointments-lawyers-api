@@ -40,6 +40,13 @@ class IntValidator extends AbstractValidator
         $minIntValue     = $validation->constraints['min'] ?? self::MIN_INT_VALUE;
         $maxIntValue     = $validation->constraints['max'] ?? self::MAX_INT_VALUE;
 
+//        if (!isset($field)) {
+//            throw new \Exception('Invalid datetime format.');
+////            $errors[] = 'Element ' . $fieldName . ' is missing.';
+////
+////            return $errors;
+//        }
+
         if (empty($fieldValue)) {
             if ($allowEmptyValue === true) {
                 return [];

@@ -1,0 +1,75 @@
+@startuml
+title Symfony 5 Appointments Lawyers RESTful API. Endpoints exposed to user
+
+actor "User" as U
+participant "Appointments Lawyers RESTful API" as API
+participant "Mysql database" as DB
+
+== 1. Index page \n ==
+
+autonumber 1
+U -> API: GET /www.plantuml.com
+API -> U: Return Status Code: 404
+
+== 2. Health Check \n ==
+
+autonumber 1
+U -> API: GET /healthcheck
+alt service is up and running
+    API -> U: Return Status Code: 204
+else service is down
+    API -> U: Return Status Code: 500
+end
+
+== 3. Add Citizen\n ==
+
+autonumber 1
+U -> API: POST /citizen
+alt save citizen
+   API -> DB: Accept citizen as JSON object and insert it in Database
+   API -> U:  Return Status Code: 201
+else error not authorized
+   API -> U:  Return Status Code: 401
+else error bad request
+   API -> U:  Return Status Code: 400
+end
+
+== 4. Add Lawyer\n ==
+
+autonumber 1
+U -> API: POST /lawyer
+alt save lawyer
+   API -> DB: Accept lawyer as JSON object and insert it in Database
+   API -> U:  Return Status Code: 201
+else error not authorized
+   API -> U:  Return Status Code: 401
+else error bad request
+   API -> U:  Return Status Code: 400
+end
+
+== 5. Citizen/Lawyer Login\n ==
+
+autonumber 1
+U -> API: POST /login
+alt returns X-Auth-Token
+   API -> DB: Accept citizen/lawyer as JSON object, find it [by email parameter] in Database.
+   API -> U:  If found - generate and return X-Auth-Token. Return Status Code: 201
+else error not authorized
+   API -> U:  Return Status Code: 401
+else error bad request
+   API -> U:  Return Status Code: 400
+end
+
+== 6. Create appointment by Citizen\n ==
+
+autonumber 1
+U -> API: POST /appointment
+alt save appointment
+   API -> DB: Accept appointment as JSON object and insert it in Database
+   API -> U:  Successfully saved. Return Status Code: 201
+else error validation failed
+   API -> U:  Return Status Code: 401
+else error bad request
+   API -> U:  Return Status Code: 400
+end
+@enduml

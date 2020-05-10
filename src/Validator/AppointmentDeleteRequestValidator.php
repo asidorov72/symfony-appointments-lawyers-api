@@ -51,8 +51,7 @@ class AppointmentDeleteRequestValidator
         // "Duplicated records" validation
         $errors[] = $this->duplicatedValidator->validate(
             [
-                'id' => $array['appointmentId'],
-                'email' => $array['email']
+                'id' => $array['appointmentId']
             ],
             $this->appointmentRepository,
             'AppointmentId',

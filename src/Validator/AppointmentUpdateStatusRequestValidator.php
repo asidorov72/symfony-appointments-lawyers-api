@@ -9,6 +9,8 @@
 namespace App\Validator;
 
 use App\Validator\ConstraintValidator\{
+    IntConstraints,
+    IntValidator,
     EnumConstraints,
     EnumValidator,
     DuplicatedRecordsValidator
@@ -21,6 +23,8 @@ use App\Helper\ArrayHelper;
  */
 class AppointmentUpdateStatusRequestValidator
 {
+    private $intValidator;
+
     private $enumValidator;
 
     private $duplicatedValidator;
@@ -31,15 +35,18 @@ class AppointmentUpdateStatusRequestValidator
      * AppointmentUpdateStatusRequestValidator constructor.
      * @param EnumValidator $enumValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
+     * @param IntValidator $intValidator
      * @param AppointmentRepository $appointmentRepository
      */
     public function __construct(
         EnumValidator $enumValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
+        IntValidator $intValidator,
         AppointmentRepository $appointmentRepository
     )
     {
         $this->enumValidator         = $enumValidator;
+        $this->intValidator          = $intValidator;
         $this->duplicatedValidator   = $duplicatedValidator;
         $this->appointmentRepository = $appointmentRepository;
     }
@@ -56,7 +63,6 @@ class AppointmentUpdateStatusRequestValidator
         $errors[] = $this->duplicatedValidator->validate(
             [
                 'id' => $array['appointmentId'],
-                'email' => $array['email']
             ],
             $this->appointmentRepository,
             'AppointmentId',

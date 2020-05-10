@@ -8,24 +8,80 @@
 
 namespace App\Service;
 
+use App\Repository\TokenRepository;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * @codeCoverageIgnore
  */
 class AuthTokenService
 {
-    private const X_AUTH_TOKEN_LEN = 34;
+    private $tokenRepository;
 
-    // Basic token
-    public function genBasicToken($username, $password): string
+    private $monologLogger;
+
+    public function __construct(
+        TokenRepository $tokenRepository,
+        LoggerInterface $monologLogger
+    )
+    {
+        $this->tokenRepository = $tokenRepository;
+        $this->monologLogger   = $monologLogger;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @return string
+     */
+    public function createBasicToken($username, $password): string
     {
         return base64_encode($username . ':' . $password);
     }
 
-    // X-Auth-Token
-    public function genXAuthToken(string $email, string $basicToken, string $userType): string
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    public function createXAuthToken(): string
     {
-        $prefix = strtoupper($userType) . '_';
+        $uuid = uuid_create(UUID_TYPE_RANDOM);
 
-        return $prefix . substr(base64_encode($email . ':' . $basicToken), 0, self::X_AUTH_TOKEN_LEN);
+        $this->tokenRepository->save(['uuidToken' => $uuid]);
+
+        return $uuid;
     }
+
+    /**
+     * @param string $uuidToken
+     * @return string
+     */
+    public function getXAuthToken(string $uuidToken): ?string
+    {
+        $tokenEntity = $this->tokenRepository->findUuidToken($uuidToken);
+
+        if (!empty($tokenEntity)) {
+            return $tokenEntity->getUuidToken();
+        }
+        return $tokenEntity;
+    }
+
+    public function deleteXAuthToken(string $uuidToken): ?string
+    {
+        try {
+            $tokenEntity = $this->tokenRepository->findAndDelete(['uuidToken' => $uuidToken]);
+
+            $this->monologLogger->info('X-Auth-Token was successfully deleted.');
+
+            return true;
+        } catch(\Exception $e) {
+            $this->monologLogger->error($e->getMessage());
+
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+
 }

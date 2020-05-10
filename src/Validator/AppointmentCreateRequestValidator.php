@@ -13,8 +13,6 @@ use App\Validator\ConstraintValidator\{
     StringValidator,
     IntConstraints,
     IntValidator,
-    EmailConstraints,
-    EmailValidator,
     EnumConstraints,
     EnumValidator,
     DatetimeConstraints,
@@ -22,6 +20,7 @@ use App\Validator\ConstraintValidator\{
     DuplicatedRecordsValidator
 };
 use App\Repository\AppointmentRepository;
+use App\Repository\CitizenRepository;
 use App\Helper\ArrayHelper;
 use App\Helper\DateTimeHelper;
 
@@ -34,8 +33,6 @@ class AppointmentCreateRequestValidator
 
     private $stringValidator;
 
-    private $emailValidator;
-
     private $enumValidator;
 
     private $datetimeValidator;
@@ -44,33 +41,35 @@ class AppointmentCreateRequestValidator
 
     private $appointmentRepository;
 
+    private $citizenRepository;
+
     /**
-     * LawyerCreateRequestValidator constructor.
+     * AppointmentCreateRequestValidator constructor.
      * @param IntValidator $intValidator
      * @param StringValidator $stringValidator
-     * @param EmailValidator $emailValidator
      * @param EnumValidator $enumValidator
      * @param DatetimeValidator $datetimeValidator
      * @param DuplicatedRecordsValidator $duplicatedValidator
      * @param AppointmentRepository $appointmentRepository
+     * @param CitizenRepository $citizenRepository
      */
     public function __construct(
         IntValidator $intValidator,
         StringValidator $stringValidator,
-        EmailValidator $emailValidator,
         EnumValidator $enumValidator,
         DatetimeValidator $datetimeValidator,
         DuplicatedRecordsValidator $duplicatedValidator,
-        AppointmentRepository $appointmentRepository
+        AppointmentRepository $appointmentRepository,
+        CitizenRepository $citizenRepository
     )
     {
         $this->intValidator          = $intValidator;
         $this->stringValidator       = $stringValidator;
-        $this->emailValidator        = $emailValidator;
         $this->enumValidator         = $enumValidator;
         $this->datetimeValidator     = $datetimeValidator;
         $this->duplicatedValidator   = $duplicatedValidator;
         $this->appointmentRepository = $appointmentRepository;
+        $this->citizenRepository     = $citizenRepository;
     }
 
     /**
@@ -128,12 +127,6 @@ class AppointmentCreateRequestValidator
                 'enum' => ['free', 'paid', 'pending'],
                 'allowEmptyValue' => true
             ])
-        );
-
-        // "email" field validation
-        $errors[] = $this->emailValidator->validate(
-            ['email' => $array['email']],
-            new EmailConstraints
         );
 
         // "appointmentDatetime" field validation

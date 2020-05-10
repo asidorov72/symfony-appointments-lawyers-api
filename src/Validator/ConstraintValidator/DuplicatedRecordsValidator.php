@@ -14,7 +14,7 @@ class DuplicatedRecordsValidator
 {
     const DUPLICATED_RECORDS_MSG = "%s already reserved.";
 
-    const REQUESTED_RECORDS_MSG = "Record with this %s created by this user was not found.";
+    const REQUESTED_RECORDS_MSG = "Record with this %s was not found.";
 
     public function validate(
         array $criteria,

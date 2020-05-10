@@ -42,11 +42,6 @@ class Appointment
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $email;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $appointmentDatetime;
@@ -74,18 +69,6 @@ class Appointment
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCitizenEmail(): ?string
-    {
-        return $this->citizenEmail;
-    }
-
-    public function setCitizenEmail(string $citizenEmail): self
-    {
-        $this->citizenEmail = $citizenEmail;
-
-        return $this;
     }
 
     public function getLawyerId(): ?int
@@ -144,18 +127,6 @@ class Appointment
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
 
         return $this;
     }
