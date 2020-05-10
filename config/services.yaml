@@ -7,9 +7,9 @@ parameters:
     api_key: '%env(API_KEY)%'
     atype_auth1: '%env(AUTH_USR_CTN)%'
     atype_auth2: '%env(AUTH_USR_LWR)%'
-    citizens_per_page: 2
-    lawyers_per_page: 2
-    appointments_per_page: 2
+    citizens_per_page: 4
+    lawyers_per_page: 4
+    appointments_per_page: 4
 
 services:
     # default configuration for services in *this* file

@@ -92,6 +92,4 @@ class AuthTokenService
             return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
-
-
 }

@@ -185,7 +185,7 @@ class AuthService
         } catch (\Exception $e) {
             $this->monologLogger->error($e->getMessage());
 
-            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_FORBIDDEN);
+            return new JsonResponse(['errorMessage' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         // 2. Get authType (citizen/lawyer) to know where to look
